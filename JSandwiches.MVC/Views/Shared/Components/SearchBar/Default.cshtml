@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Search Page";
+}
+<head>
+    <style>
+        .search-bar-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .search-input-group {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: 1px solid #4CAF50;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+            /* Optional: Hover effect for the button */
+            .search-button:hover {
+                background-color: #45a049;
+            }
+
+        .filter-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .label {
+            margin-right: 10px;
+        }
+
+        .filter-select,
+        .filter-range {
+            margin-right:  15px;
+        }
+    </style>
+</head>
+
+<div class="search-bar-container">
+    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+    {
+        <div class="search-input-group">
+            <input type="text" name="query" placeholder="Search..." class="search-input" />
+            <button type="submit" class="search-button">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+
+        <div class="filter-section">
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="filter-select">
+                <option value="">All</option>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <label for="price">Price Range:</label>
+            <input type="range" name="price" id="price" min="0" max="1000" class="filter-range" />
+        </div>
+    }
+</div>
