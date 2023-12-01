@@ -9,13 +9,13 @@ namespace JSandwiches.Models.OrderDTO
         [Required]
         public int Id { get; set; }
 
-        public OrderDTO Order { get; set; }
+        public OrderDTO? Order { get; set; }
 
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
 
-        public DealSpecificsDTO DealSpecifics { get; set; }
+        public DealSpecificsDTO? DealSpecifics { get; set; }
     }
 
     public class CreateReceiptDTO

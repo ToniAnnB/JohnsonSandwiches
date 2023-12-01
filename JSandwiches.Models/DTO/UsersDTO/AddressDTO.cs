@@ -7,7 +7,7 @@ namespace JSandwiches.Models.UsersDTO
         [Required]
         public int Id { get; set; }
 
-        public ParishDTO Parish { get; set; }
+        public ParishDTO? Parish { get; set; }
     }
 
     public class CreateAddressDTO

@@ -92,9 +92,9 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> EditDealSpecifics([FromBody] DealSpecificsDTO dealdto)
+        public async Task<IActionResult> EditDealSpecifics(string id, [FromBody] DealSpecificsDTO dealdto)
         {
-            if (dealdto == null || dealdto.Id < 1)
+            if (dealdto == null || Convert.ToInt32(id) < 1)
                 return BadRequest();
 
             var result = _mapper.Map<DealSpecifics>(dealdto);

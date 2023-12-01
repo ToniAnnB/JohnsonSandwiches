@@ -28,6 +28,12 @@ namespace JSandwiches.MVC.Controllers
             var data = PagerHelper<DealSpecificsDTO>.Paging(dLstDealSpecificss, pg, 4);
 
             ViewBag.Pager = data.Item2;
+
+            var baseUrl = "https://localhost:44356/images/";
+            foreach (var deal in data.Item1)
+            {
+                deal.ImagePath = baseUrl + deal.ImagePath;
+            }
             return View(data.Item1);
         }
 
@@ -49,7 +55,7 @@ namespace JSandwiches.MVC.Controllers
 
             var vm = new DealSpecificsVM()
             {
-                DealSpecifics = new DealSpecificsDTO(),
+                DealSpecificsDTO = new DealSpecificsDTO(),
                 ddlDeals = await GetDealsDDL()
             };
             return View(vm);
@@ -64,10 +70,10 @@ namespace JSandwiches.MVC.Controllers
                 imageFile = await ImageHelper.SaveImage(vm.DealImagePath);
 
             if(imageFile!=null)
-            vm.DealSpecifics.ImagePath = imageFile;
+            vm.DealSpecificsDTO.ImagePath = imageFile;
 
 
-            var status = await _unitOfWork.DealSpecifics.Create(vm.DealSpecifics);
+            var status = await _unitOfWork.DealSpecifics.Create(vm.DealSpecificsDTO);
             if (status == true)
             {
                 TempData["PostResponse"] = "Success";
@@ -90,7 +96,7 @@ namespace JSandwiches.MVC.Controllers
             {
                 var vm = new DealSpecificsVM()
                 {
-                    DealSpecifics = dealSpecifics.Item1,
+                    DealSpecificsDTO = dealSpecifics.Item1,
                     ddlDeals = await GetDealsDDL()
                 };
                 return View(vm);
@@ -105,10 +111,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(DealSpecificsVM vm)
         {
-            //var nImagePah = vm.DealSpecifics.ImagePath.Replace( @"\\", @"backslash");
+            //var nImagePah = vm.DealSpecificsDTO.ImagePath.Replace( @"\\", @"backslash");
            // mvc\server\uploads\dd0de68e - 9960 - 4265 - 898b - 56f1dea10397_summerheat.png
 
-            var status = await _unitOfWork.DealSpecifics.Update(vm.DealSpecifics, vm.DealSpecifics.Id);
+            var status = await _unitOfWork.DealSpecifics.Update(vm.DealSpecificsDTO, vm.DealSpecificsDTO.Id);
             if (status == true)
             {
                 TempData["PostResponse"] = "Success2";

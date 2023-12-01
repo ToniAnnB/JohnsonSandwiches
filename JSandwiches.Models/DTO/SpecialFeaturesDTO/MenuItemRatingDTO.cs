@@ -9,11 +9,11 @@ namespace JSandwiches.Models.SpecialFeaturesDTO
         [Required]
         public int Id { get; set; }
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
-        public RatingDTO Rating { get; set; }
+        public RatingDTO? Rating { get; set; }
 
-        public MenuItemDTO MenuItem { get; set; }
+        public MenuItemDTO? MenuItem { get; set; }
 
     }
     public class CreateMenuItemRatingDTO

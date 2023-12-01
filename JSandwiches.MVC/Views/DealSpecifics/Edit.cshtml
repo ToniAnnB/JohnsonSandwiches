@@ -16,41 +16,41 @@
         <p>Please fill in the form below</p>
     </div>
 
-    <form asp-action="Edit" class="form">
+    <form method="post" class="form">
         <fieldset>
             <legend></legend>
 
             <div class="form-group">
                 <div class="form-group">
-                    <input asp-for="DealSpecifics.Id" class="form-control" hidden />
+                    <input asp-for="DealSpecificsDTO.Id" class="form-control" hidden />
                 </div>
                 <label class="control-label">Deal Name</label>
-                <select asp-for="DealSpecifics.DealID" asp-items="@Model.ddlDeals">
+                <select asp-for="DealSpecificsDTO.DealID" asp-items="@Model.ddlDeals">
                     <option selected disabled>Select Deal Name</option>
                 </select>
-                <span asp-validation-for="DealSpecifics.DealID" class="text-danger"></span>
+                <span asp-validation-for="DealSpecificsDTO.DealID" class="text-danger"></span>
             </div>
             <span>
                 <div class="form-group">
-                    <label asp-for="DealSpecifics.StartDate" class="control-label"></label>
-                    <input asp-for="DealSpecifics.StartDate" class="form-control" />
-                    <span asp-validation-for="DealSpecifics.StartDate" class="text-danger"></span>
+                    <label asp-for="DealSpecificsDTO.StartDate" class="control-label"></label>
+                    <input asp-for="DealSpecificsDTO.StartDate" class="form-control" />
+                    <span asp-validation-for="DealSpecificsDTO.StartDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="DealSpecifics.EndDate" class="control-label"></label>
-                    <input asp-for="DealSpecifics.EndDate" class="form-control" />
-                    <span asp-validation-for="DealSpecifics.EndDate" class="text-danger"></span>
+                    <label asp-for="DealSpecificsDTO.EndDate" class="control-label"></label>
+                    <input asp-for="DealSpecificsDTO.EndDate" class="form-control" />
+                    <span asp-validation-for="DealSpecificsDTO.EndDate" class="text-danger"></span>
                 </div>
             </span>
             <div class="form-group">
-                <label asp-for="DealSpecifics.Percentage" class="control-label"></label>
-                <input asp-for="DealSpecifics.Percentage" class="form-control" />
-                <span asp-validation-for="DealSpecifics.Percentage" class="text-danger"></span>
+                <label asp-for="DealSpecificsDTO.Percentage" class="control-label"></label>
+                <input asp-for="DealSpecificsDTO.Percentage" class="form-control" />
+                <span asp-validation-for="DealSpecificsDTO.Percentage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Upload Image</label>
-                <input asp-for="DealSpecifics.ImagePath" class="form-control" readonly>
-                <span asp-validation-for="DealSpecifics.ImagePath" class="text-danger"></span>
+                <input asp-for="DealSpecificsDTO.ImagePath" class="form-control">
+                <span asp-validation-for="DealSpecificsDTO.ImagePath" class="text-danger"></span>
             </div>
             <div class="button-group center-container">
                 <button asp-action="Index" class="button cancel">Cancel</button>

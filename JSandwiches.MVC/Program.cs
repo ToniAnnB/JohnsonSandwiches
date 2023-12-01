@@ -2,6 +2,7 @@ using JSandwiches.MVC;
 using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Respository;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,7 @@ builder.Services.AddTransient<IConsumUnitOfWork, ConsumUnitOfWork>();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
-//builder.Services.AddScoped<IViewComponentInvoker>();
 builder.Services.AddRazorPages();
-//builder.Services.AddRazorComponents();
 
 
 var app = builder.Build();
@@ -31,6 +30,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+#region File Upload and Request Path
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath,"mvc/server/uploads")),
+    RequestPath = "/images/mvc/server/uploads" 
+});
+#endregion
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -38,7 +46,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapRazorPages();
-//app.MapComponents();
 
 
 app.MapControllerRoute(

@@ -7,9 +7,9 @@ namespace JSandwiches.Models.UsersDTO
         [Required]
         public int Id { get; set; }
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
-        public AddressDTO Address { get; set; }
+        public AddressDTO? Address { get; set; }
     }
 
     public class CreateCustomerAddressDTO

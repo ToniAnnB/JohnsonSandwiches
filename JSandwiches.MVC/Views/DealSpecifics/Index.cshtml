@@ -19,10 +19,12 @@
 <div class="content-container">
     <div class="center-container-col index">
         <div class="index-top center-container-col">
-            <h1>Deal Specifics Listing</h1>
 
+            <h1>Deal Specifics Listing</h1>
             <div class="search-input-group">
+
                 <input type="text" name="query" placeholder="Search..." class="search-input" />
+
                 <button type="submit" class="search-button">
                     <i class="fa fa-search"></i>
                 </button>
@@ -56,6 +58,24 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            <!-- Modal -->
+                            <div class="modal fade" id="dealImage-@item.Id" tabindex="-1" aria-labelledby="dealImageLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="dealImageLabel">@item.Deal.Title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body center-container">
+                                            <img src="@item.ImagePath" width="450" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
@@ -75,7 +95,7 @@
                                 <td>
                                     <div class="center-container action-btns">
                                         <a asp-action="Edit" class="custom-btn edit-btn" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a asp-action="Details" class="custom-btn detail-btn" asp-route-id="@item.Id"><i class="fa-regular fa-image"></i></a>
+                                        <a class="custom-btn detail-btn" asp-route-id="@item.Id" data-bs-toggle="modal" data-bs-target="#dealImage-@item.Id"><i class="fa-regular fa-image"></i></a>
                                         <form asp-action="Delete" method="post" asp-route-id="@item.Id">
                                             <button type="submit" class="custom-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
                                         </form>

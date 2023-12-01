@@ -6,7 +6,7 @@ namespace JSandwiches.Models.DTO.FoodDTO
     {
         [Required]
         public int Id { get; set; }
-        public ItemSubCategoryDTO SubCategory { get; set; }
+        public ItemSubCategoryDTO? SubCategory { get; set; }
 
     }
 

@@ -8,9 +8,9 @@ namespace JSandwiches.Models.SpecialFeaturesDTO
         [Required]
         public int Id { get; set; }
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
-        public LoyaltyPointDTO LoyaltyPoints { get; set; }
+        public LoyaltyPointDTO? LoyaltyPoints { get; set; }
     }
 
     public class CreateCustomerLoyaltyPointDTO

@@ -9,10 +9,10 @@ namespace JSandwiches.Models.OrderDTO
         public int Id { get; set; }
 
 
-        public MenuItemAddOnDTO MenuItemAddOn { get; set; }
+        public MenuItemAddOnDTO? MenuItemAddOn { get; set; }
 
 
-        public OrderStatusDTO OrderStatus { get; set; }
+        public OrderStatusDTO? OrderStatus { get; set; }
 
 
     }

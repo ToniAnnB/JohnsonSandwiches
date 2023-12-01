@@ -1,10 +1,8 @@
-﻿using JSandwiches.MVC.IRespository;
-using AutoMapper;
+﻿using AutoMapper;
+using JSandwiches.MVC.IRespository;
 using Newtonsoft.Json;
-using System.Text;
-using JSandwiches.Models.DTO.FoodDTO;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace JSandwiches.MVC.Respository
 {
@@ -34,7 +32,7 @@ namespace JSandwiches.MVC.Respository
             var content = new StringContent(sEntity, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
                 return true;
             return false;
         }
@@ -42,7 +40,7 @@ namespace JSandwiches.MVC.Respository
         public async Task<bool> Delete(int id)
         {
             HttpResponseMessage response = await _httpClient.DeleteAsync($"{_httpClient.BaseAddress}/{id}");
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
                 return true;
             return false;
         }
@@ -51,7 +49,7 @@ namespace JSandwiches.MVC.Respository
         {
             var list = new List<T>();
             var response = await _httpClient.GetAsync(_httpClient.BaseAddress);
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
                 list = JsonConvert.DeserializeObject<List<T>>(data);
@@ -68,7 +66,7 @@ namespace JSandwiches.MVC.Respository
                 var data = await response.Content.ReadAsStringAsync();
                 var entity = JsonConvert.DeserializeObject<T>(data);
                 if (entity != null)
-                return (entity, null);
+                    return (entity, null);
             }
             return (null, response.StatusCode.ToString());
         }
