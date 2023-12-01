@@ -1,15 +1,19 @@
+:root {
+    --black: #2a2c37;
+    --shadow: #3c3f4bb2;
+    --brown: #C68B59;
+    --red: #911F27;
+    --orange: #EA5C2B;
+    --yellow: #EBA83A;
+    --green: #004A2F;
+    --empHFont: 'Andada Pro', serif;
+    --cusHFont: 'Trochut', sans-serif;
+    --empBFont: 'Karla', sans-serif;
+    --cusBFont: 'Dosis', sans-serif;
+}
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    font-size: 10px;
 }
 
 html {
@@ -17,6 +21,32 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+*{
+    border: none;
+    text-decoration: none;
+    list-style: none;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    color: var(--black);
+    box-sizing: border-box;
+}
+
+
+
+.content-container{
+    background-color: #FFF;
+    width: 88%;
+    margin-left: 12%;
+}
+
+.center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}.center-container-col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

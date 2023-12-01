@@ -1,0 +1,174 @@
+﻿body {
+    background-color: var(--brown);
+    height: 100vh;
+    padding: 0;
+    font-family: var(--empBFont);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--empHFont);
+}
+
+.content-container {
+    height: 100vh;
+    padding: 4%;
+}
+
+.search-bar-container {
+    text-align: center;
+    width: 100%;
+    margin: 20px;
+    background-color: #45a049;
+}
+
+.search-input-group {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    width: 96%;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background-color: var(--green);
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+    .search-button i {
+        color: #FFF;
+    }
+
+    .search-button:hover {
+        background-color: #45a049;
+    }
+
+.index {
+    height: 100%;
+    width: 100%;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.index-top {
+    height: 100%;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    gap: 5%;
+}
+
+    .index-top h1 {
+        font-size: 3.8rem;
+    }
+
+.search-input-group {
+    width: 100%;
+}
+
+.index-content {
+    width: 100%;
+}
+
+.table td {
+    font-size: 1.7rem;
+    padding: 1% 2%;
+}
+
+.table th {
+    font-size: 2.1rem;
+    color: #FFF;
+    padding: 1% 2%;
+    font-weight: 500;
+}
+
+.action-btns {
+    gap: 5px;
+    width: 140px;
+}
+
+.custom-btn {
+    padding: 1%;
+    color: #FFF;
+    border-radius: 8px;
+    box-shadow: 2px 2px 1px var(--shadow) inset;
+}
+
+    .custom-btn i {
+        color: #FFF;
+        text-shadow: 1px 1px 2px var(--shadow);
+    }
+
+    .custom-btn:hover {
+        filter: brightness(1.2);
+        box-shadow: 1px 1px 2px var(--shadow);
+        color: #FFF;
+    }
+
+.edit-btn {
+    background-color: var(--yellow)
+}
+
+.create-btn {
+    background-color: var(--green);
+    text-decoration: none;
+}
+
+    .create-btn i {
+        margin-left: 5px;
+    }
+
+    .create-btn:hover {
+        background-color: #387e3b;
+    }
+
+
+.delete-btn {
+    background-color: var(--red);
+}
+
+.detail-btn {
+    background-color: var(--orange);
+}
+
+.edit-btn, .detail-btn, .delete-btn {
+    width: 40px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+.pagi-btn {
+    width: 24px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--black);
+    box-shadow: 1px 1px 2px var(--shadow);
+    background-color: #FFF;
+}
+.pagi-btn:hover{
+    color: var(--black);
+    filter: brightness(0.8);
+}
+.active2 {
+    background-color: var(--brown);
+    color: #FFF;
+    box-shadow: 1px 1px 2px var(--shadow) inset;
+}
+    .active2:hover {
+        background-color: var(--brown);
+        color: #FFF;
+        box-shadow: 1px 1px 2px var(--shadow) inset;
+        filter: none;
+    }

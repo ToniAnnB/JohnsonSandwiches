@@ -12,6 +12,12 @@ namespace JSandwiches.API.Controllers.Food
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private List<string> includes = new List<string>()
+            {
+                "MenuItem.Category",
+                "MenuItem",
+                "AddOn"
+            };
         public MenuItemAddOnController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -21,14 +27,14 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpGet]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetMenuItemAddOns()
         {
-            var menuItemAddOns = await _unitOfWork.MenuItemAddOn.GetAll(null, null, null);
+            var menuItemAddOns = await _unitOfWork.MenuItemAddOn.GetAll(null, null, includes);
 
             if (menuItemAddOns == null)
                 return NotFound();
@@ -40,7 +46,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpGet("{id}")]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,7 +56,9 @@ namespace JSandwiches.API.Controllers.Food
             if (id < 1)
                 return BadRequest();
 
-            var menuItemAddOn = await _unitOfWork.MenuItemAddOn.Get(q => q.Id == id, null);
+
+
+            var menuItemAddOn = await _unitOfWork.MenuItemAddOn.Get(q => q.Id == id, includes);
 
             if (menuItemAddOn == null)
                 return NotFound();

@@ -32,8 +32,9 @@ builder.Services.AddControllers(config =>
 //Connects to server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"), b => b.MigrationsAssembly("JSandwiches.API"));
 });
+// 
 
 //Configuring the Identity system to the application's services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -76,7 +77,7 @@ builder.Services.AddAuthentication(options =>
 
 
 
-builder.Services.AddResponseCaching();
+//builder.Services.AddResponseCaching();
 
 
 //adding automapper for modelDTO mapping

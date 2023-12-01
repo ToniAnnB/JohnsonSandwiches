@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace JSandwiches.Migrations
+namespace JSandwiches.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231122182213_EditRating")]
-    partial class EditRating
+    [Migration("20231121203534_Initial Update")]
+    partial class InitialUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -379,8 +379,8 @@ namespace JSandwiches.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<double>("StarCount")
-                        .HasColumnType("float");
+                    b.Property<int>("StarCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<JSandwiches.Models.DTO.FoodDTO.AddOnDTO>
+﻿@model IEnumerable<JSandwiches.Models.SpecialFeaturesDTO.DealDTO>
 
 @{
-    ViewData["Title"] = "Add On";
+    ViewData["Title"] = "Deal";
     int pageNo = 0;
     Pager pager = new Pager();
 
@@ -19,7 +19,7 @@
 <div class="content-container">
     <div class="center-container-col index">
         <div class="index-top center-container-col">
-            <h1>Additional Ingredients Listing</h1>
+            <h1>Deals Listing</h1>
 
             <div class="search-input-group">
                 <input type="text" name="query" placeholder="Search..." class="search-input" />
@@ -36,14 +36,12 @@
                     <thead class="table-dark">
                         <tr>
                             <th>
-                                Item Name
+                                Deal Title
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Description)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Price)
-                            </th>
+
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -57,13 +55,10 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
-                                </td>
+
                                 <td>
                                     <div class="center-container action-btns">
                                         <a asp-action="Edit" class="custom-btn edit-btn" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a asp-action="Details" class="custom-btn detail-btn" asp-route-id="@item.Id"><i class="fa-solid fa-info"></i></a>
                                         <form asp-action="Delete" method="post" asp-route-id="@item.Id">
                                             <button type="submit" class="custom-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
                                         </form>
@@ -83,7 +78,7 @@
                     @for (int pge = 1; pge <= pager.EndPage; pge++)
                     {
                         <li class="page-item">
-                            <a class="custom-btn pagi-btn @(pge == pager.CurrentPage? "active2" : "") " asp-asp-controller="AddOn" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                            <a class="custom-btn pagi-btn @(pge == pager.CurrentPage? "active2" : "") " asp-asp-controller="Deal" asp-action="Index" asp-route-pg="@pge">@pge</a>
                         </li>
                     }
                 </ul>
@@ -91,4 +86,3 @@
         </div>
     </div>
 </div>
-
