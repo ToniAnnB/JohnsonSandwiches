@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.User
@@ -13,6 +12,11 @@ namespace JSandwiches.API.Controllers.User
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private List<string> includes = new List<string>()
+        {
+            "Customer",
+            "Address.Parish"
+        };
 
         public CustomerAddressController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -23,14 +27,14 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCustomerAddress()
         {
-            var customerAddi = await _unitOfWork.CustomerAddress.GetAll(null, null, null);
+            var customerAddi = await _unitOfWork.CustomerAddress.GetAll(null, null, includes);
 
             if (customerAddi == null)
                 return NotFound();
@@ -42,7 +46,7 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet("{id}")]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -52,7 +56,7 @@ namespace JSandwiches.API.Controllers.User
             if (id < 1)
                 return BadRequest();
 
-            var customerAddi = await _unitOfWork.CustomerAddress.Get(q => q.Id == id, null);
+            var customerAddi = await _unitOfWork.CustomerAddress.Get(q => q.Id == id, includes);
 
             if (customerAddi == null)
                 return NotFound();

@@ -1,4 +1,4 @@
-﻿using JSandwiches.Models.SpecialFeaturesDTO;
+﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Models;
 using Microsoft.AspNetCore.Mvc;

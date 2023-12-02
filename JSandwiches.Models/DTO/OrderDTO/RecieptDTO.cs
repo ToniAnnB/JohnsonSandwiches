@@ -1,8 +1,8 @@
-﻿using JSandwiches.Models.SpecialFeaturesDTO;
-using JSandwiches.Models.UsersDTO;
+﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.OrderDTO
+namespace JSandwiches.Models.DTO.OrderDTO
 {
     public class RecieptDTO : CreateOrderDTO
     {

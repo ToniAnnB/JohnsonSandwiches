@@ -1,7 +1,7 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.OrderDTO
+namespace JSandwiches.Models.DTO.OrderDTO
 {
     public class OrderDTO : CreateOrderDTO
     {

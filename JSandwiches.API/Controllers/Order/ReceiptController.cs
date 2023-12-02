@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.Order;
-using JSandwiches.Models.OrderDTO;
+using JSandwiches.Models.DTO.OrderDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.Order

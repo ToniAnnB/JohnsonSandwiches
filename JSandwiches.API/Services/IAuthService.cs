@@ -1,5 +1,5 @@
-﻿using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
+﻿using JSandwiches.Models.DTO.UsersDTO;
+using JSandwiches.Models.Users;
 
 namespace JSandwiches.Services
 {

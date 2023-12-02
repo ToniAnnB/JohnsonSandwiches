@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.User
@@ -12,6 +12,10 @@ namespace JSandwiches.API.Controllers.User
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private List<string> includes = new List<string>()
+        {
+            "Parish"
+        };
 
         public AddressController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -22,14 +26,14 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAddress()
         {
-            var addresss = await _unitOfWork.Address.GetAll(null, null, null);
+            var addresss = await _unitOfWork.Address.GetAll(null, null, includes);
 
             if (addresss == null)
                 return NotFound();
@@ -41,7 +45,7 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet("{id}")]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,7 +55,7 @@ namespace JSandwiches.API.Controllers.User
             if (id < 1)
                 return BadRequest();
 
-            var address = await _unitOfWork.Address.Get(q => q.Id == id, null);
+            var address = await _unitOfWork.Address.Get(q => q.Id == id, includes);
 
             if (address == null)
                 return NotFound();

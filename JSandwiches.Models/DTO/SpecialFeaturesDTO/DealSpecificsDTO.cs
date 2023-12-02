@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.SpecialFeaturesDTO
+namespace JSandwiches.Models.DTO.SpecialFeaturesDTO
 {
     public class DealSpecificsDTO : CreateDealSpecificsDTO
     {

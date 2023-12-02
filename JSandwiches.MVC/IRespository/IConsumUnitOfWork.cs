@@ -1,7 +1,7 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.Models.OrderDTO;
-using JSandwiches.Models.SpecialFeaturesDTO;
-using JSandwiches.Models.UsersDTO;
+using JSandwiches.Models.DTO.OrderDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 
 namespace JSandwiches.MVC.IRespository
 {

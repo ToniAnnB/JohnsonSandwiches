@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.Models.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 

@@ -15,12 +15,10 @@ namespace JSandwiches.MVC.Controllers
     public class MenuItemController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
-        private readonly IHostingEnvironment _environment;
 
-        public MenuItemController(IConsumUnitOfWork unitOfWork, IHostingEnvironment environment)
+        public MenuItemController(IConsumUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _environment = environment;
         }
 
         public async Task<IActionResult> Index(int pg)

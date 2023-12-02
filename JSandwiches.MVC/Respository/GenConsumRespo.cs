@@ -36,6 +36,26 @@ namespace JSandwiches.MVC.Respository
                 return true;
             return false;
         }
+        public async Task<(bool, T?)> Create2(T entity)
+        {
+            var createDtoTypeName = $"Create{entity.GetType().Name}";
+            var createDtoType = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault(t => t.Name == createDtoTypeName);
+            var mappedEntity = _mapper.Map(entity, typeof(T), createDtoType);
+
+            var sEntity = JsonConvert.SerializeObject(mappedEntity);
+
+            var content = new StringContent(sEntity, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                var cEntity = JsonConvert.DeserializeObject<T>(data);
+                return (true, cEntity);
+            }
+            return (false, null);
+        }
 
         public async Task<bool> Delete(int id)
         {

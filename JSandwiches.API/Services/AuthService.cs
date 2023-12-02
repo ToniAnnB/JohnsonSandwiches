@@ -1,7 +1,6 @@
-﻿using JSandwiches.Models;
-using JSandwiches.Models.Data;
+﻿using JSandwiches.Models.Data;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

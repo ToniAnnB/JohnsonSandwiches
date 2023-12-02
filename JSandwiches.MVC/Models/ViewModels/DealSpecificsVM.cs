@@ -1,4 +1,4 @@
-﻿using JSandwiches.Models.SpecialFeaturesDTO;
+﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JSandwiches.MVC.Models.ViewModels

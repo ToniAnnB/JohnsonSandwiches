@@ -1,8 +1,8 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.Models.UsersDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.SpecialFeaturesDTO
+namespace JSandwiches.Models.DTO.SpecialFeaturesDTO
 {
     public class MenuItemRatingDTO : CreateMenuItemRatingDTO
     {

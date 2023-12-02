@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.User
@@ -22,7 +22,7 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,7 +41,7 @@ namespace JSandwiches.API.Controllers.User
 
 
         [HttpGet("{id}")]
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

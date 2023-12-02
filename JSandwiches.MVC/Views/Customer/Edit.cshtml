@@ -1,0 +1,82 @@
+﻿@model JSandwiches.MVC.Models.ViewModels.CustomerVM
+
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<head>
+    <link href="~/css/upsert.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+
+<div class="content-container">
+    <div class="form-header center-container-col">
+        <h1>Update Form</h1>
+        <p>Please fill in the form below</p>
+    </div>
+
+    <form asp-action="Edit" class="form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input asp-for="Customer.Id" class="form-control" readonly hidden />
+        <input asp-for="Address.Id" class="form-control" readonly hidden/>
+        <input asp-for="CustomerAddress.Id" class="form-control" readonly hidden/>
+
+        <fieldset>
+            <legend>Personal</legend>
+            <div class="input-group gap-5">
+                <div class="form-group w-40">
+                    <label asp-for="Customer.FirstName" class="control-label"></label>
+                    <input asp-for="Customer.FirstName" class="form-control" />
+                    <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group w-40">
+                    <label asp-for="Customer.LastName" class="control-label"></label>
+                    <input asp-for="Customer.LastName" class="form-control" />
+                    <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Phone" class="control-label"></label>
+                <input asp-for="Customer.Phone" class="form-control" />
+                <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Email" class="control-label"></label>
+                <input asp-for="Customer.Email" class="form-control" />
+                <span asp-validation-for="Customer.Email" class="text-danger"></span>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Address</legend>
+            <div class="form-group">
+                <label asp-for="Address.Ln1" class="control-label"></label>
+                <input asp-for="Address.Ln1" class="form-control" />
+                <span asp-validation-for="Address.Ln1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Ln2" class="control-label"></label>
+                <input asp-for="Address.Ln2" class="form-control" />
+                <span asp-validation-for="Address.Ln2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Parish</label>
+                <select asp-for="Address.ParishID" asp-items="@Model.ddlParishes">
+                    <option selected disabled>Select a Parish</option>
+                </select>
+                <span asp-validation-for="Address.ParishID" class="text-danger"></span>
+            </div>
+        </fieldset>
+        <div class="button-group center-container">
+            <button asp-action="Index" class="button cancel">Cancel</button>
+            <button type="submit" class="button create">Edit</button>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
