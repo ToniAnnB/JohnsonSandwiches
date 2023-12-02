@@ -48,7 +48,7 @@ fieldset {
     text-shadow: 0.5px 0px 2px var(--shadow);
 }
 
-.form input {
+.form input{
     border: 0.5px solid #001F3F;
     font-size: 1.7rem;
     padding: 5px 8px;
@@ -56,7 +56,7 @@ fieldset {
     border-radius: 8px;
 }
 
-    .form input[type=text], input[type=email] {
+    .form input[type=text], input[type=email], .ck-editor__editable{
         background-color: #F8F8F8;
         border: none;
         box-shadow: 2px 2px 3px #d3d3d3 inset;
@@ -121,4 +121,15 @@ input[type=radio] {
 }
 .button-group{
     gap: 5px;
+}
+.cke_textarea_inline {
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

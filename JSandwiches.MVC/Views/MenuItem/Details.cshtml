@@ -21,7 +21,7 @@
         <div class="center-container-col text-container">
             <div class="text-top center-container-col">
                 <h1>Description</h1>
-                <p>@Model.Description</p>
+                <p>@Html.Raw(@Model.Description)</p>
                 <div class="center-container category">
                     <p>@Model.SubCategory.Category.Title - </p> 
                     <p>@Model.SubCategory.Title</p>
