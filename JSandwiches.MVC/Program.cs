@@ -2,6 +2,7 @@ using JSandwiches.MVC;
 using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Respository;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,9 +30,7 @@ builder.Services.AddSession();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
-//builder.Services.AddScoped<IViewComponentInvoker>();
 builder.Services.AddRazorPages();
-//builder.Services.AddRazorComponents();
 
 
 var app = builder.Build();
@@ -43,6 +42,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+#region File Upload and Request Path
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "mvc/server/uploads")),
+    RequestPath = "/images/mvc/server/uploads"
+});
+#endregion
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,4 +1,4 @@
-﻿using JSandwiches.Models.UsersDTO;
+﻿using JSandwiches.Models.DTO.UsersDTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
