@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.SpecialFeaturesDTO
+namespace JSandwiches.Models.DTO.SpecialFeaturesDTO
 {
     public class DealSpecificsDTO : CreateDealSpecificsDTO
     {
         [Required]
         public int Id { get; set; }
 
-        public DealDTO Deal { get; set; }
+        public DealDTO? Deal { get; set; }
     }
     public class CreateDealSpecificsDTO
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.OrderDTO
+namespace JSandwiches.Models.DTO.OrderDTO
 {
     public class OrderStatusDTO
     {

@@ -1,12 +1,12 @@
-﻿using JSandwiches.Models.DTO.FoodDTO;
+﻿using AutoMapper;
+using JSandwiches.Models.DTO.FoodDTO;
+using JSandwiches.Models.DTO.OrderDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Food;
 using JSandwiches.Models.Order;
-using JSandwiches.Models.OrderDTO;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.Models.SpecialFeaturesDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
-using AutoMapper;
 
 namespace JSandwiches.Configurations
 {
@@ -41,7 +41,7 @@ namespace JSandwiches.Configurations
             CreateMap<CustomerLoyaltyPoint, CustomerLoyaltyPointDTO>().ReverseMap();
             CreateMap<CustomerLoyaltyPoint, CreateCustomerLoyaltyPointDTO>().ReverseMap();
             CreateMap<Deal, DealDTO>().ReverseMap();
-            CreateMap<Deal,CreateDealDTO>().ReverseMap();
+            CreateMap<Deal, CreateDealDTO>().ReverseMap();
             CreateMap<DealSpecifics, DealSpecificsDTO>().ReverseMap();
             CreateMap<DealSpecifics, CreateDealSpecificsDTO>().ReverseMap();
             CreateMap<Rating, RatingDTO>().ReverseMap();

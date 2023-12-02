@@ -1,0 +1,138 @@
+﻿body {
+    background-color: var(--brown);
+    padding: 0;
+    font-family: var(--empBFont);
+}
+.content-container {
+    min-height: 100vh;
+    padding: 4%;
+}
+    .content-container h1 {
+        font-size: 4.5rem;
+        font-family: var(--empHFont);
+    }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    padding: 20px 0px;
+}
+
+    .form span {
+        font-size: 1.5rem;
+        text-shadow: 1px 3px 2px #d3d3d7;
+    }
+
+
+fieldset legend {
+    font-size: 2.2rem;
+    width: auto; /* Adjust the width as needed */
+    padding: 0 10px;
+    border-bottom: none;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: white;
+}
+
+.group-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: var(--green) 0.1px solid !important;
+    border-radius: 8px;
+    padding: 30px !important;
+    position: relative;
+    margin-top: 15px;
+
+}
+
+
+.form label{
+    font-size: 1.7rem;
+    text-shadow: 0.5px 0px 2px var(--shadow);
+}
+
+.form input{
+    border: 0.5px solid #001F3F;
+    font-size: 1.7rem;
+    padding: 5px 8px;
+    margin-left: 5px;
+    border-radius: 8px;
+}
+
+    .form input[type=text], input[type=email], .ck-editor__editable{
+        background-color: #F8F8F8;
+        border: none;
+        box-shadow: 2px 2px 3px #d3d3d3 inset;
+    }
+
+
+select, option {
+    font-size: 1.5rem;
+    border: 0.5px solid #001F3F;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+}
+
+    input[type=radio]:checked {
+        color: #2BB885;
+    }
+
+.radio label {
+    font-size: 1.5rem;
+    margin-left: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button {
+    margin-top: 20px;
+    width: 90px;
+    font-size: 1.5rem;
+    padding: 7px 5px;
+    color: #FFF;
+    box-shadow: 2px 2px 1px var(--shadow) inset;
+}
+
+.cancel {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: var(--black);
+}
+.cancel:hover{
+    background-color: var(--red);
+    color: #FFF;
+    transition: 0.7s;
+}
+
+.create {
+    background-color: var(--green);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.create:hover{
+    filter: brightness(1.7);
+    transition: 0.7s;
+}
+.button-group{
+    gap: 5px;
+}
+.w-40 {
+    width: 48.5%;
+}

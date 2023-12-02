@@ -1,0 +1,102 @@
+﻿@model JSandwiches.Models.DTO.UsersDTO.CustomerAddressDTO
+
+@{
+    ViewData["Title"] = "Customer";
+}
+
+
+
+<head>
+    <link href="~/css/details.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<form class="content-container center-container-col">
+    <div class="title_heading">
+        <h1>Details</h1>
+    </div>
+
+    <div class="form-sect">
+                <div class="form_title">
+        <h3>Personal</h3>
+        </div>
+
+        <div class="input-group">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Customer.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Customer.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Customer.FirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Customer.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Customer.LastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Customer.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Customer.Phone)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Customer.Phone)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Customer.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Customer.Email)
+                </dd>
+            </dl>
+
+
+        </div>
+
+    </div>    <div class="form-sect">
+                <div class="form_title">
+        <h3>Address</h3>
+        </div>
+
+        <div class="input-group">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model =>model.Address.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model =>model.Address.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model =>model.Address.Ln1)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model =>model.Address.Ln1)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model =>model.Address.Ln2)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model =>model.Address.Ln2)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model =>model.Address.ParishID)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model =>model.Address.Parish.Name)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+
+    <div class="button-group center-container">
+        <button asp-action="Index" class="button cancel">Return</button>
+        <button asp-action="Edit" asp-route-id="@Model.Id" class="button create">Edit</button>
+    </div>
+
+</form>
+

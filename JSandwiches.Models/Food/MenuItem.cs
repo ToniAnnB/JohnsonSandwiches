@@ -32,9 +32,5 @@ namespace JSandwiches.Models.Food
         [ForeignKey("SubCategoryID")]
         public virtual ItemSubCategory SubCategory { get; set; }
 
-
-
-        [Column(TypeName = "varchar(250)")]
-        public string SpecialRequest { get; set; }
     }
 }

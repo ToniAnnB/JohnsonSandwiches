@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.Order;
-using JSandwiches.Models.OrderDTO;
+using JSandwiches.Models.DTO.OrderDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.Order
@@ -21,7 +21,7 @@ namespace JSandwiches.API.Controllers.Order
 
 
         [HttpGet]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -40,7 +40,7 @@ namespace JSandwiches.API.Controllers.Order
 
 
         [HttpGet("{id}")]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

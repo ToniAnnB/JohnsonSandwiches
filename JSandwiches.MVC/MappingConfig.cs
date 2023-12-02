@@ -2,11 +2,11 @@
 using JSandwiches.Models.DTO.FoodDTO;
 using JSandwiches.Models.Food;
 using JSandwiches.Models.Order;
-using JSandwiches.Models.OrderDTO;
+using JSandwiches.Models.DTO.OrderDTO;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.Models.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 
 namespace JSandwiches.MVC
 {

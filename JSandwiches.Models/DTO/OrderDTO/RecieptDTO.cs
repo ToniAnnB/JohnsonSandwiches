@@ -1,21 +1,21 @@
-﻿using JSandwiches.Models.SpecialFeaturesDTO;
-using JSandwiches.Models.UsersDTO;
+﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.UsersDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.OrderDTO
+namespace JSandwiches.Models.DTO.OrderDTO
 {
     public class RecieptDTO : CreateOrderDTO
     {
         [Required]
         public int Id { get; set; }
 
-        public OrderDTO Order { get; set; }
+        public OrderDTO? Order { get; set; }
 
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
 
-        public DealSpecificsDTO DealSpecifics { get; set; }
+        public DealSpecificsDTO? DealSpecifics { get; set; }
     }
 
     public class CreateRecieptDTO

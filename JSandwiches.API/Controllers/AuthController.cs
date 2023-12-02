@@ -1,9 +1,7 @@
-﻿using JSandwiches.Models;
-using JSandwiches.Models.Data;
+﻿using JSandwiches.Models.Data;
+using JSandwiches.Models.DTO.UsersDTO;
 using JSandwiches.Models.Users;
-using JSandwiches.Models.UsersDTO;
 using JSandwiches.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +23,7 @@ namespace JSandwiches.Controllers
         }
 
 
-        [HttpPost("register")] 
+        [HttpPost("register")]
         public async Task<IActionResult> Register(ApplicationUser user)
         {
 
@@ -54,7 +52,7 @@ namespace JSandwiches.Controllers
             {
                 var token = _authService.GenerateToken(user);
 
-                return Ok(new { status = "success", message = "login succesful", data = token});
+                return Ok(new { status = "success", message = "login succesful", data = token });
             }
             return Ok(new { status = "fail", message = "login failed" });
 

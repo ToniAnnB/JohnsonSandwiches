@@ -8,7 +8,7 @@ namespace JSandwiches.Models.DTO.FoodDTO
         public int Id { get; set; }
 
 
-        public  ItemCategoryDTO Category { get; set; }
+        public  ItemCategoryDTO? Category { get; set; }
 
     }
     public class CreateItemSubCategoryDTO

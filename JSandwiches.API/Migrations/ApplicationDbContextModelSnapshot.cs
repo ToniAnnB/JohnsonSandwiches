@@ -4,19 +4,16 @@ using JSandwiches.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace JSandwiches.Migrations
+namespace JSandwiches.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231126175153_Spelling Update")]
-    partial class SpellingUpdate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,10 +112,6 @@ namespace JSandwiches.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("SpecialRequest")
-                        .IsRequired()
-                        .HasColumnType("varchar(250)");
-
                     b.Property<int>("SubCategoryID")
                         .HasColumnType("int");
 
@@ -178,6 +171,9 @@ namespace JSandwiches.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SpecialRequest")
+                        .HasColumnType("varchar(250)");
 
                     b.HasKey("Id");
 
@@ -296,7 +292,7 @@ namespace JSandwiches.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
@@ -306,7 +302,7 @@ namespace JSandwiches.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 

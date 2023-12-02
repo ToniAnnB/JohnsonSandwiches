@@ -2,7 +2,7 @@ using JSandwiches.MVC;
 using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Respository;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,23 +15,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IConsumUnitOfWork, ConsumUnitOfWork>();
 #endregion
 
-builder.Services.AddHttpClient("AuthAPI", httpClient =>
-{
-    httpClient.BaseAddress = new Uri("https://localhost:44381/api/Auth");
-    httpClient.DefaultRequestHeaders.Accept.Clear();
-    httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-    httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpClientFactory");
-});
-
-builder.Services.AddMvc()
-    .AddSessionStateTempDataProvider();
-builder.Services.AddSession();
-
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
-//builder.Services.AddScoped<IViewComponentInvoker>();
 builder.Services.AddRazorPages();
-//builder.Services.AddRazorComponents();
 
 
 var app = builder.Build();
@@ -44,6 +30,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+#region File Upload and Request Path
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath,"mvc/server/uploads")),
+    RequestPath = "/images/mvc/server/uploads" 
+});
+#endregion
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -51,8 +46,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapRazorPages();
-app.UseSession();
-
 
 
 app.MapControllerRoute(

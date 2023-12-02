@@ -6,7 +6,7 @@ namespace JSandwiches.Models.DTO.FoodDTO
     {
         [Required]
         public int Id { get; set; }
-        public ItemSubCategoryDTO SubCategory { get; set; }
+        public ItemSubCategoryDTO? SubCategory { get; set; }
 
     }
 
@@ -33,11 +33,6 @@ namespace JSandwiches.Models.DTO.FoodDTO
         [Required]
         public int SubCategoryID { get; set; }
 
-
-
-        [Required]
-        [StringLength(maximumLength: 250, ErrorMessage = "Special request is too long")]
-        public string SpecialRequest { get; set; }
 
     }
 

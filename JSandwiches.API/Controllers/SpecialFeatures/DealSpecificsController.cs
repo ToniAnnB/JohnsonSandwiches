@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.Models.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace JSandwiches.API.Controllers.SpecialFeatures
 {
@@ -12,6 +13,10 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private List<string> includes = new List<string>()
+        {
+            "Deal"
+        };
 
         public DealSpecificsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -22,14 +27,14 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
 
 
         [HttpGet]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetDealSpecificss()
         {
-            var deals = await _unitOfWork.DealSpecifics.GetAll(null, null, null);
+            var deals = await _unitOfWork.DealSpecifics.GetAll(null, null, includes);
 
             if (deals == null)
                 return NotFound();
@@ -41,7 +46,7 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
 
 
         [HttpGet("{id}")]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,7 +56,7 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
             if (id < 1)
                 return BadRequest();
 
-            var deal = await _unitOfWork.DealSpecifics.Get(q => q.Id == id, null);
+            var deal = await _unitOfWork.DealSpecifics.Get(q => q.Id == id, includes);
 
             if (deal == null)
                 return NotFound();
@@ -87,19 +92,15 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> EditDealSpecifics([FromBody] DealSpecificsDTO deal)
+        public async Task<IActionResult> EditDealSpecifics(string id, [FromBody] DealSpecificsDTO dealdto)
         {
-            if (deal == null || deal.Id < 1)
+            if (dealdto == null || Convert.ToInt32(id) < 1)
                 return BadRequest();
 
-            if (ModelState.IsValid)
-            {
-                var result = _mapper.Map<DealSpecifics>(deal);
-                _unitOfWork.DealSpecifics.Update(result);
-                await _unitOfWork.Save();
-                return Ok(result);
-            }
-            return BadRequest();
+            var result = _mapper.Map<DealSpecifics>(dealdto);
+            _unitOfWork.DealSpecifics.Update(result);
+            await _unitOfWork.Save();
+            return Ok(result);
         }
 
 

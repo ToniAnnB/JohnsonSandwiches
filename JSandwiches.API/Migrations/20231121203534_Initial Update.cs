@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace JSandwiches.Migrations
+namespace JSandwiches.API.Migrations
 {
     /// <inheritdoc />
     public partial class InitialUpdate : Migration

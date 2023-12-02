@@ -22,7 +22,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpGet]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,7 +41,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpGet("{id}")]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

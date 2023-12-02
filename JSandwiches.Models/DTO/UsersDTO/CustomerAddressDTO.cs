@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.UsersDTO
+namespace JSandwiches.Models.DTO.UsersDTO
 {
     public class CustomerAddressDTO : CreateCustomerAddressDTO
     {
         [Required]
         public int Id { get; set; }
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
-        public AddressDTO Address { get; set; }
+        public AddressDTO? Address { get; set; }
     }
 
     public class CreateCustomerAddressDTO

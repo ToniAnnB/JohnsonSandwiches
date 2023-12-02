@@ -8,9 +8,11 @@ namespace JSandwiches.Models.SpecialFeatures
         [Key]
         public int Id { get; set; }
 
-
+        [Column (TypeName = "datetime")]
         public DateTime StartDate { get; set; }
 
+
+        [Column(TypeName = "datetime")]
         public DateTime EndDate { get; set; }
 
 

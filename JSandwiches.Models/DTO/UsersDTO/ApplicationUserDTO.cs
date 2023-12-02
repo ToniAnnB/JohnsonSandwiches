@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.UsersDTO
+namespace JSandwiches.Models.DTO.UsersDTO
 {
     public class ApplicationUserDTO : LoginAppUserDTO
     {

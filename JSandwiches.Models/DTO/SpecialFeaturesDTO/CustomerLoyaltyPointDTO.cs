@@ -1,16 +1,16 @@
-﻿using JSandwiches.Models.UsersDTO;
+﻿using JSandwiches.Models.DTO.UsersDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.SpecialFeaturesDTO
+namespace JSandwiches.Models.DTO.SpecialFeaturesDTO
 {
     public class CustomerLoyaltyPointDTO : CreateCustomerLoyaltyPointDTO
     {
         [Required]
         public int Id { get; set; }
 
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO? Customer { get; set; }
 
-        public LoyaltyPointDTO LoyaltyPoints { get; set; }
+        public LoyaltyPointDTO? LoyaltyPoints { get; set; }
     }
 
     public class CreateCustomerLoyaltyPointDTO

@@ -1,7 +1,7 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
 using System.ComponentModel.DataAnnotations;
 
-namespace JSandwiches.Models.OrderDTO
+namespace JSandwiches.Models.DTO.OrderDTO
 {
     public class OrderDTO : CreateOrderDTO
     {
@@ -9,10 +9,10 @@ namespace JSandwiches.Models.OrderDTO
         public int Id { get; set; }
 
 
-        public MenuItemAddOnDTO MenuItemAddOn { get; set; }
+        public MenuItemAddOnDTO? MenuItemAddOn { get; set; }
 
 
-        public OrderStatusDTO OrderStatus { get; set; }
+        public OrderStatusDTO? OrderStatus { get; set; }
 
 
     }
@@ -26,6 +26,10 @@ namespace JSandwiches.Models.OrderDTO
 
         [Required]
         public decimal Price { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: 250, ErrorMessage = "Special request is too long")]
+        public string? SpecialRequest { get; set; }
 
 
         [Required]

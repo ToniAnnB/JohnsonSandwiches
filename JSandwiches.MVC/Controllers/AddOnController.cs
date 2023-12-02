@@ -22,7 +22,7 @@ namespace JSandwiches.MVC.Controllers
                 return RedirectToAction("ErrorPage", "Home");
 
             var dLstAddOns = lstAddOns.OrderByDescending(x => x.Id).ToList();
-            var data = PagerHelper<AddOnDTO>.Paging(dLstAddOns, pg, 2);
+            var data = PagerHelper<AddOnDTO>.Paging(dLstAddOns, pg, 4);
 
             ViewBag.Pager = data.Item2;
             return View(data.Item1);

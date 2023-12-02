@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace JSandwiches.Migrations
+namespace JSandwiches.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20231121203534_Initial Update")]

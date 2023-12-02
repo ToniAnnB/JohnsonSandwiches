@@ -1,0 +1,88 @@
+﻿@model IEnumerable<JSandwiches.Models.DTO.SpecialFeaturesDTO.DealDTO>
+
+@{
+    ViewData["Title"] = "Deal";
+    int pageNo = 0;
+    Pager pager = new Pager();
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<head>
+    <link href="~/css/index.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+
+<div class="content-container">
+    <div class="center-container-col index">
+        <div class="index-top center-container-col">
+            <h1>Deals Listing</h1>
+
+            <div class="search-input-group">
+                <input type="text" name="query" placeholder="Search..." class="search-input" />
+                <button type="submit" class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+            <div class="index-content">
+                <p class="mb-5">
+                    <a asp-action="Create" class="custom-btn create-btn">Create New<i class="fa-solid fa-bacon"></i></a>
+                </p>
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>
+                                Deal Title
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+
+                                <td>
+                                    <div class="center-container action-btns">
+                                        <a asp-action="Edit" class="custom-btn edit-btn" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                            <button type="submit" class="custom-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="container">
+            @if (pager.TotalPages > 0)
+            {
+                <ul class="pagination justify-content-end">
+                    @for (int pge = 1; pge <= pager.EndPage; pge++)
+                    {
+                        <li class="page-item">
+                            <a class="custom-btn pagi-btn @(pge == pager.CurrentPage? "active2" : "") " asp-asp-controller="Deal" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.Models.SpecialFeaturesDTO;
+using JSandwiches.Models.DTO.SpecialFeaturesDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.SpecialFeatures
@@ -21,7 +21,7 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
 
 
         [HttpGet]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -40,7 +40,7 @@ namespace JSandwiches.API.Controllers.SpecialFeatures
 
 
         [HttpGet("{id}")]
-        [ResponseCache(CacheProfileName = "5minsDuration")]
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

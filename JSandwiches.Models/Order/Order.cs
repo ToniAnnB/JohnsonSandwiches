@@ -25,6 +25,9 @@ namespace JSandwiches.Models.Order
 
 
 
+        [Column(TypeName = "varchar(250)")]
+        public string? SpecialRequest { get; set; }
+
         public int OrderStatusID { get; set; }
         [ForeignKey("OrderStausID")]
         public virtual OrderStatus OrderStatus { get; set; }
