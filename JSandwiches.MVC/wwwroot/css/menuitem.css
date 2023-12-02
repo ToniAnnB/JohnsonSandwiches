@@ -4,7 +4,107 @@
     font-family: var(--empBFont);
 }
 
+p {
+    font-family: var(--empBFont)
+}
+
 .content-container {
     min-height: 100vh;
     padding: 4%;
 }
+
+    .content-container h1 {
+        font-size: 4.5rem;
+        font-family: var(--empHFont);
+    }
+
+.details {
+    justify-content: start;
+    gap: 80px;
+}
+
+.img-container {
+    position: relative;
+    box-shadow: 0px 0px 10px 2px var(--shadow);
+}
+
+.filter {
+    opacity: 0.6;
+}
+
+.title-filter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 17%;
+    padding: 0px 40px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .title-filter h4 {
+        font-size: 2.5rem;
+        font-family: var(--empHFont);
+        font-weight: 300;
+        text-shadow: 2px 2px 3px var(--shadow);
+    }
+
+    .title-filter p {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 3px var(--shadow);
+    }
+.text-container {
+    align-self: start;
+    justify-content: space-between;
+    height: 340px;
+    padding: 20px 0px;
+}
+.text-top{
+    width: 85%;
+}
+.text-top h1{
+    font-size: 2.7rem;
+    align-self: start;
+    margin-bottom: 10px;
+}
+
+.text-top p{
+    font-size: 2rem;
+}
+.category {
+    align-self: start;
+    margin-top: 20px;
+}
+.button {
+    margin-top: 20px;
+    width: 90px;
+    font-size: 1.5rem;
+    padding: 7px 5px;
+    color: #FFF;
+    box-shadow: 2px 2px 1px var(--shadow) inset;
+    text-decoration: none;
+    
+}
+.cancel {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: var(--black);
+}
+
+    .cancel:hover {
+        background-color: var(--red);
+        color: #FFF;
+        transition: 0.7s;
+    }
+
+.create {
+    background-color: var(--green);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+    .create:hover {
+        filter: brightness(1.7);
+        transition: 0.7s;
+    }

@@ -7,28 +7,30 @@
     <link href="~/css/menuitem.css" rel="stylesheet" asp-append-version="true"/>
 </head>
 
-<div class="content-container center-container-col">
+<div class="content-container center-container-col details">
     <h1>Menu Item Details</h1>
     <div class="item-container center-container">
         <div class="img-container">
-            <img src="@Model.ImagePath" width="300" />
-            <div style="background-color: @ViewBag.DominantColor;" class="title-filter center-container">
+            <img src="@Model.ImagePath" width="520" />
+            <div class="title-filter filter" style="background-color: @ViewBag.DominantColor;"></div>
+            <div class="title-filter center-container">
                 <h4 style="color: @ViewBag.FontColor;">@Model.Title</h4>
-                <p style="color: @ViewBag.FontColor;">@Model.Price</p>
+                <p style="color: @ViewBag.FontColor;">$@Model.Price</p>
             </div>
         </div>
-        <div class="text-container">
-            <div class="text-top">
+        <div class="center-container-col text-container">
+            <div class="text-top center-container-col">
+                <h1>Description</h1>
                 <p>@Model.Description</p>
-                <div class="center-container">
-                    <p>@Model.SubCategory.Category.Title</p> -
+                <div class="center-container category">
+                    <p>@Model.SubCategory.Category.Title - </p> 
                     <p>@Model.SubCategory.Title</p>
                 </div>
             </div>
-            <div class="text-bot">
-                <a asp-action="Index" class="button cancel">Return</a>
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="button create">Edit</a>
-            </div>
+            <form class="text-bot center-container">
+                <button asp-action="Index" class="button cancel">Return</button>
+                <button asp-action="Edit" asp-route-id="@Model.Id" class="button create">Edit</button>
+            </form>
         </div>
     </div>
 </div>
