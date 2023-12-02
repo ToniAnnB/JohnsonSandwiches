@@ -1,0 +1,60 @@
+﻿@model JSandwiches.MVC.Models.ViewModels.MenuItemVM
+
+@{
+    ViewData["Title"] = "Menu Item";
+}
+
+<head>
+    <link href="~/css/upsert.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+
+<div class="content-container">
+    <div class="form-header center-container-col">
+        <h1>Creation Form</h1>
+        <p>Please fill in the form below</p>
+    </div>
+
+    <form asp-action="Create" class="form" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <fieldset>
+            <legend></legend>
+
+            <div class="form-group">
+                <label class="control-label">Deal Name</label>
+                <select asp-for="MenuItem.SubCategoryID" asp-items="@Model.ddlSubCategory">
+                    <option selected disabled>Select Deal Name</option>
+                </select>
+                <span asp-validation-for="MenuItem.SubCategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuItem.Title" class="control-label"></label>
+                <input asp-for="MenuItem.Title" class="form-control" />
+                <span asp-validation-for="MenuItem.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuItem.Description" class="control-label"></label>
+                <input asp-for="MenuItem.Description" class="form-control" />
+                <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuItem.Price" class="control-label"></label>
+                <input asp-for="MenuItem.Price" class="form-control" />
+                <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Upload Image</label>
+                <input asp-for="MenuItemImagePath" type="file" name="MenuItemImagePath" id="MenuItemImagePath" class="form-control">
+                <span asp-validation-for="MenuItem.ImagePath" class="text-danger"></span>
+            </div>
+            <div class="button-group center-container">
+                <button asp-action="Index" class="button cancel">Cancel</button>
+                <button type="submit" class="button create">Create</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

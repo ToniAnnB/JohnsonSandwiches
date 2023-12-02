@@ -4,7 +4,6 @@ using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Text.RegularExpressions;
 
 namespace JSandwiches.MVC.Controllers
 {
@@ -37,18 +36,6 @@ namespace JSandwiches.MVC.Controllers
             return View(data.Item1);
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var dealSpecifics = await _unitOfWork.DealSpecifics.GetById(id);
-            if (dealSpecifics.Item1 != null)
-                return View(dealSpecifics.Item1);
-
-            var statusCode = dealSpecifics.Item2;
-            if (statusCode == "404")
-                return RedirectToAction("NotFound", "Home");
-            return RedirectToAction("ErrorPage", "Home");
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -66,11 +53,11 @@ namespace JSandwiches.MVC.Controllers
         {
             var imageFile = "";
 
-            if (vm.DealImagePath!=null)
+            if (vm.DealImagePath != null)
                 imageFile = await ImageHelper.SaveImage(vm.DealImagePath);
 
-            if(imageFile!=null)
-            vm.DealSpecificsDTO.ImagePath = imageFile;
+            if (imageFile != null)
+                vm.DealSpecificsDTO.ImagePath = imageFile;
 
 
             var status = await _unitOfWork.DealSpecifics.Create(vm.DealSpecificsDTO);
@@ -112,7 +99,7 @@ namespace JSandwiches.MVC.Controllers
         public async Task<IActionResult> Edit(DealSpecificsVM vm)
         {
             //var nImagePah = vm.DealSpecificsDTO.ImagePath.Replace( @"\\", @"backslash");
-           // mvc\server\uploads\dd0de68e - 9960 - 4265 - 898b - 56f1dea10397_summerheat.png
+            // mvc\server\uploads\dd0de68e - 9960 - 4265 - 898b - 56f1dea10397_summerheat.png
 
             var status = await _unitOfWork.DealSpecifics.Update(vm.DealSpecificsDTO, vm.DealSpecificsDTO.Id);
             if (status == true)

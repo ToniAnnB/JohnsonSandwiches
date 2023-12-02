@@ -1,0 +1,10 @@
+﻿body {
+    background-color: var(--brown);
+    padding: 0;
+    font-family: var(--empBFont);
+}
+
+.content-container {
+    min-height: 100vh;
+    padding: 4%;
+}

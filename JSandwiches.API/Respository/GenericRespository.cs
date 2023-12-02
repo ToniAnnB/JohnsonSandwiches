@@ -42,7 +42,7 @@ namespace JSandwiches.API.Respository
                     query = query.Include(includeProperty);
                 }
             }
-            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
+            return await query.FirstOrDefaultAsync(expression);
         }
 
 
@@ -68,7 +68,7 @@ namespace JSandwiches.API.Respository
                 query = orderBy(query);
             }
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task Insert(T entity)

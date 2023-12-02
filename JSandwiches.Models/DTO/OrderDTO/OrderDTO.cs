@@ -27,6 +27,10 @@ namespace JSandwiches.Models.OrderDTO
         [Required]
         public decimal Price { get; set; }
 
+        [Required]
+        [StringLength(maximumLength: 250, ErrorMessage = "Special request is too long")]
+        public string? SpecialRequest { get; set; }
+
 
         [Required]
         public int OrderStatusID { get; set; }

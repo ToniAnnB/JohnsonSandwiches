@@ -1,7 +1,7 @@
-﻿@model IEnumerable<JSandwiches.Models.DTO.FoodDTO.ItemCategoryDTO>
+﻿@model IEnumerable<JSandwiches.Models.DTO.FoodDTO.ItemSubCategoryDTO>
 
 @{
-    ViewData["Title"] = "Category";
+    ViewData["Title"] = "SubCategory";
     int pageNo = 0;
     Pager pager = new Pager();
 
@@ -19,7 +19,7 @@
 <div class="content-container">
     <div class="center-container-col index">
         <div class="index-top center-container-col">
-            <h1>Menu Item Category Listing</h1>
+            <h1>Menu Item SubCategory Listing</h1>
 
             <div class="search-input-group">
                 <input type="text" name="query" placeholder="Search..." class="search-input" />
@@ -30,7 +30,7 @@
 
             <div class="index-content">
                 <p class="mb-5">
-                    <a asp-action="Create" class="custom-btn create-btn">Create New<i class="fa-solid fa-layer-group"></i></a>
+                    <a asp-action="Create" class="custom-btn create-btn">Create New<i class="fa-solid fa-list"></i></a>
                 </p>
                 <table class="table table-hover">
                     <thead class="table-dark">
@@ -40,6 +40,9 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                Associated Category
                             </th>
                             <th>Actions</th>
                         </tr>
@@ -53,6 +56,9 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Category.Title)
                                 </td>
                                 <td>
                                     <div class="center-container action-btns">
@@ -76,7 +82,7 @@
                     @for (int pge = 1; pge <= pager.EndPage; pge++)
                     {
                         <li class="page-item">
-                            <a class="custom-btn pagi-btn @(pge == pager.CurrentPage? "active2" : "") " asp-asp-controller="Category" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                            <a class="custom-btn pagi-btn @(pge == pager.CurrentPage? "active2" : "") " asp-asp-controller="SubCategory" asp-action="Index" asp-route-pg="@pge">@pge</a>
                         </li>
                     }
                 </ul>

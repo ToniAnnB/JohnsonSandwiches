@@ -1,0 +1,175 @@
+﻿using JSandwiches.Models.DTO.FoodDTO;
+using JSandwiches.Models.SpecialFeatures;
+using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.Models;
+using JSandwiches.MVC.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Drawing;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+
+
+namespace JSandwiches.MVC.Controllers
+{
+    public class MenuItemController : Controller
+    {
+        private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly IHostingEnvironment _environment;
+
+        public MenuItemController(IConsumUnitOfWork unitOfWork, IHostingEnvironment environment)
+        {
+            _unitOfWork = unitOfWork;
+            _environment = environment;
+        }
+
+        public async Task<IActionResult> Index(int pg)
+        {
+            var lstMenuItems = await _unitOfWork.MenuItem.GetAll();
+
+            if (lstMenuItems == null)
+                return RedirectToAction("ErrorPage", "Home");
+
+            var dLstMenuItems = lstMenuItems.OrderByDescending(x => x.Id).ToList();
+            var data = PagerHelper<MenuItemDTO>.Paging(dLstMenuItems, pg, 4);
+
+            ViewBag.Pager = data.Item2;
+            return View(data.Item1);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+
+            var menuItem = await _unitOfWork.MenuItem.GetById(id);
+            if (menuItem.Item1 != null)
+            {
+
+                string fullPath = menuItem.Item1.ImagePath.ToString();
+
+                // Get the dominant color
+                var dominantColor = ColourHelper.GetDominantColor(fullPath);
+
+                // Convert the Rgba32 object to a hex string
+                string dominantColorHex = $"#{dominantColor.R:X2}{dominantColor.G:X2}{dominantColor.B:X2}";
+
+                // Assign the hex string to the ViewBag to use in your view
+                ViewBag.DominantColor = dominantColorHex;
+
+                string fontColor = ColourHelper.GetFontColor(dominantColor);
+
+                // Pass the font color to the view
+                ViewBag.FontColor = fontColor;
+
+                var baseUrl = "https://localhost:44356/images/";
+                menuItem.Item1.ImagePath = baseUrl + menuItem.Item1.ImagePath;
+
+                return View(menuItem.Item1);
+            }
+
+            var statusCode = menuItem.Item2;
+            if (statusCode == "404")
+                return RedirectToAction("NotFound", "Home");
+            return RedirectToAction("ErrorPage", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+
+            var vm = new MenuItemVM()
+            {
+                MenuItem = new MenuItemDTO(),
+                ddlSubCategory = await GetSubCategoryDDL()
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(MenuItemVM vm)
+        {
+            var imageFile = "";
+
+            if (vm.MenuItemImagePath != null)
+                imageFile = await ImageHelper.SaveImage(vm.MenuItemImagePath);
+
+            if (imageFile != null)
+                vm.MenuItem.ImagePath = imageFile;
+
+
+            var status = await _unitOfWork.MenuItem.Create(vm.MenuItem);
+            if (status == true)
+            {
+                TempData["PostResponse"] = "Success";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["PostResponse"] = "Failed";
+                vm.ddlSubCategory = await GetSubCategoryDDL();
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            var dealSpecifics = await _unitOfWork.MenuItem.GetById(id);
+            if (dealSpecifics.Item1 != null)
+            {
+                var vm = new MenuItemVM()
+                {
+                    MenuItem = dealSpecifics.Item1,
+                    ddlSubCategory = await GetSubCategoryDDL()
+                };
+                return View(vm);
+            }
+
+            var statusCode = dealSpecifics.Item2;
+            if (statusCode == "404")
+                return RedirectToAction("NotFound", "Home");
+            return RedirectToAction("ErrorPage", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(MenuItemVM vm)
+        {
+            var status = await _unitOfWork.MenuItem.Update(vm.MenuItem, vm.MenuItem.Id);
+            if (status == true)
+            {
+                TempData["PostResponse"] = "Success2";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["PostResponse"] = "Failed";
+                vm.ddlSubCategory = await GetSubCategoryDDL();
+                return View(vm);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var status = await _unitOfWork.MenuItem.Delete(id);
+            if (status == true)
+                return RedirectToAction("Index");
+            return RedirectToAction();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetSubCategoryDDL()
+        {
+            var lstSubCategories = await _unitOfWork.ItemSubCategory.GetAll();
+
+            var ddlSubCategories = lstSubCategories.Select(x => new SelectListItem
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            });
+
+            return ddlSubCategories;
+        }
+    }
+
+}
+
