@@ -8,40 +8,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400;500&family=Dosis:wght@200;300;400;500;600;700;800&family=Karla:wght@200;300;400;500;600;700;800&family=Trochut&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400;500&family=Dosis:wght@200;300;400;500;600;700;800&family=Karla:wght@200;300;400;500;600;700;800&family=Trochut&family=Gochi+Hand&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JSandwiches.MVC.styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrantjs/1.0.0/Vibrant.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
+@{
+    string role = Context.Session.GetString("RoleSession")!;
+    string login = Context.Session.GetString("LoginSession")!;
+}
 <body>
-@*     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JSandwiches.MVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
- *@  
+
+    @if(ViewData["Title"]!= null && ViewData["Title"]!= "Login")
+    {
+        <header>
+            <nav>
+                @if (login != null)
+                {
+                    @switch (@role)
+                    {
+                        case "Admin":
+                            <partial name="Navbars/_adminNav" />
+                            break;
+
+                        case "Kitchen":
+                            <partial name="Navbars/_kitchenNav" />
+                            break;
+
+                        case "CService":
+                            <partial name="Navbars/_cServiceNav" />
+                            break;
+
+                        case "Customer":
+                            <partial name="Navbars/_customerNav" />
+                            break;
+                    }
+                }
+                else
+                {
+                    <partial name="Navbars/_customerNav" />
+                }
+            </nav>
+        </header>
+
+    }
+  
         
             @RenderBody()
-      
 
+    @if (ViewData["Title"] != null && ViewData["Title"] != "Login")
+    {
+        <partial name="_footer" />
+    }
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -49,14 +70,15 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         ClassicEditor.create(document.querySelector('#editor'))
-        // ClassicEditor.create(document.querySelector('#editor2'))
-        // ClassicEditor.create(document.querySelector('#editor3'))
-        // ClassicEditor.create(document.querySelector('#editor4'))
             .catch(error => {
                 console.error(error);
             });
     </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        AOS.init();
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

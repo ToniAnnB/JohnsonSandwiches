@@ -1,0 +1,100 @@
+﻿
+/*font-family: 'Gochi Hand', cursive;
+font-family: 'Pacifico', cursive;*/
+.nav-bar {
+    height: 12vh;
+    background-color: #fff;
+    padding: 0px 90px;
+    justify-content: space-between;
+    box-shadow: 1px 1px 4px var(--shadow);
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    transition: background-color 0.5s;
+    z-index: 1000;
+}
+.nav-link {
+    font-family: 'Gochi Hand', cursive;
+    color: var(--black);
+    font-size: 2rem;
+}
+.nav-link:hover{
+    color: var(--orange);
+}
+.logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    text-decoration: none;
+    color: var(--black);
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+a.gradient-hover {
+    background: linear-gradient(to right, var(--black), var(--black), var(--black), var(--red), var(--orange), var(--green));
+    background-size: 250% 210%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background-position 0.5s, color 0.5s;
+    text-decoration: none; /* Remove underline from links */
+}
+
+    a.gradient-hover:hover {
+        background-position: -100% 50%;
+        animation: gradient 1s infinite alternate;
+        cursor: pointer;
+    }
+
+.scrolled {
+    background-color: #0000005a;
+    box-shadow: 1px 1px 4px #0000005a;
+}
+.l-scrolled {
+    color: #fff;
+    text-shadow: 2px 2px 4px #0000005a;
+}
+a.lo-scrolled {
+    background: linear-gradient(to right, #fff, #fff, #fff, var(--red), var(--orange), var(--green));
+    background-size: 250% 210%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background-position 0.5s, color 0.5s;
+    text-decoration: none; /* Remove underline from links */
+    text-shadow: 2px 2px 4px #0000005a;
+}
+    a.lo-scrolled:hover {
+
+        
+        animation: gradient 1s infinite alternate;
+        cursor: pointer;
+    }
+    .login-btn{
+        border: #808080 solid 0.5px;
+        border-radius: 25px;
+        height: 30px;
+        width: 80px;
+        color: #808080;
+        font-size: 1.8rem;
+        margin-left: 5px;
+    }
+    .login-btn i{
+        color: #808080;
+        margin-right: 7px;
+    }
+        .login-btn:hover, .login-btn:hover i {
+            color: var(--orange);
+            transition: 0.8s;
+        }
+        .login-btn:hover {
+            border: 0.5px solid var(--orange);
+            box-shadow: 1px 1px 4px var(--black);
+        }

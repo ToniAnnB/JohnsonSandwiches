@@ -1,0 +1,22 @@
+﻿<head>
+    <link href="~/css/horizontal.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class=" center-container nav-bar">
+    <a class="logo gradient-hover" asp-area="" asp-controller="Home" asp-action="Index">Johnson's Sandwiches</a>
+    <div class="center-container">
+        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Customer</a>
+        <div class="dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Order
+            </a>
+
+            <ul class="dropdown-menu">
+                <a class="nav-link  dropdown-item" asp-area="" asp-controller="Order" asp-action="Listing">Create</a>
+                <a class="nav-link  dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Status</a>
+            </ul>
+        </div>
+            <a class="nav-link " asp-controller="Login" asp-action="Logout">LogOut</a>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿<head>
+    <link href="~/css/vertical.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="sidebar">
+    <div class="nav_content center-container-col">
+        <div class="employ-img">
+            <img src="~/images/branding/Johnson’s Sandwiches.png" atl="Johnsons's Sandwich logo" />
+        </div>
+        <div class="nav_links center-container-col">
+            <div class="@(ViewData["Title"].ToString()=="Dashboard"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="Home" asp-action="Dashboard"><i class="fa-solid fa-house"></i>Dashboard</a>
+            </div>
+
+            <div class="@(ViewData["Title"].ToString()=="Menu Item"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="MenuItem" asp-action="Index"><i class="fa-solid fa-utensils"></i>Menu Item</a>
+            </div>
+
+            <div class="@(ViewData["Title"].ToString()=="Deal Specifics"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="DealSpecifics" asp-action="Index"><i class="fa-solid fa-comments-dollar"></i>Deal Specs</a>
+            </div>
+
+            <div class="@(ViewData["Title"].ToString()=="Customer"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="Customer" asp-action="Index"><i class="fa-solid fa-user"></i>Customer</a>
+            </div>
+
+            <div class=" @(ViewBag.TabName.ToString()=="Miscellaneous"?"select-nav":"") link center-container">
+                <a class="navi-links center-container" data-bs-toggle="collapse" href="#misc-links" role="button" aria-expanded="false" aria-controls="misc-links">
+                    <i class="fa-solid fa-layer-group"></i> Other
+                </a>
+            </div>
+            <div class="collapse center-container-col" id="misc-links">
+                <a class="navi-links" asp-controller="AddOn" asp-action="Index">Add On</a>
+                <a class="navi-links" asp-controller="Category" asp-action="Index">Category</a>
+                <a class="navi-links" asp-controller="SubCategory" asp-action="Index">Sub Category</a>
+                <a class="navi-links" asp-controller="Deal" asp-action="Index">Deal</a>
+                <a class="navi-links" asp-controller="LoyaltyPoint" asp-action="Index">Loyalty Point</a>
+            </div>
+        </div>
+        <div class="account">
+            <p>janet.doe@email.com</p>
+            <a asp-controller="Login" asp-action="Logout" class="sidebar-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </div>
+</div>

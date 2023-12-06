@@ -3,13 +3,16 @@
     --shadow: #3c3f4bb2;
     --brown: #C68B59;
     --red: #911F27;
-    --orange: #EA5C2B;
+   /* --orange: #EA5C2B;*/
+    --orange: #FA8707;
     --yellow: #EBA83A;
     --green: #004A2F;
     --empHFont: 'Andada Pro', serif;
     --cusHFont: 'Trochut', sans-serif;
     --empBFont: 'Karla', sans-serif;
     --cusBFont: 'Dosis', sans-serif;
+    --brandBFont: 'Gochi Hand', cursive;
+    --brandLFont: 'Pacifico', cursive;
 }
 
 html {
@@ -17,11 +20,11 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
-*{
+* {
     border: none;
     text-decoration: none;
     list-style: none;
@@ -31,21 +34,26 @@ html {
     color: var(--black);
     box-sizing: border-box;
 }
-p{ margin: 0;}
+
+p {
+    margin: 0;
+}
 
 
 
-.content-container{
+.content-container {
     background-color: #FFF;
     width: 88%;
     margin-left: 12%;
 }
 
-.center-container{
+.center-container {
     display: flex;
     justify-content: center;
     align-items: center;
-}.center-container-col{
+}
+
+.center-container-col {
     display: flex;
     justify-content: center;
     align-items: center;

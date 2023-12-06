@@ -1,8 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewBag.TabName = "Miscellaneous";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<head>
+    <link href="~/css/home.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="content-container2">
+    <section class="landing-page">
+        <div class="parallax">
+            <div class="center-container-col landing-msg">
+                <h1 data-aos="fade-down" data-aos-duration="1500">
+                    Taste the LOVE in every bite
+                </h1>
+                <div class="center-container landing-btns ">
+                    <a href="" class="landing-btn btn-left">Catering</a>
+                    <a asp-controller="Order" asp-action="Listing" class="landing-btn btn-right">Order Now</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="deals">
+        <div style="height:1000px;background-color:var(--brown);font-size:36px">
+            Scroll Up and Down this page to see the parallax scrolling effect.
+            This div is just here to enable scrolling.
+            Tip: Try to remove the background-attachment property to remove the scrolling effect.
+        </div>
+    </section>
+    
+
 </div>
+
+

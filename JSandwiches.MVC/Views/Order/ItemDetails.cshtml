@@ -1,0 +1,41 @@
+﻿@model JSandwiches.Models.DTO.FoodDTO.MenuItemDTO
+
+@{
+    ViewData["Title"] = "Menu Item";
+    ViewBag.TabName = "";
+}
+<head>
+    <link href="~/css/itemdetail.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="detail-container center-container-col details">
+    <div class="item-container center-container-col">
+        <div class="img-container">
+            <img src="@Model.ImagePath" width="700" height="400" style="border:solid @ViewBag.DominantColor 2px"/>
+            <div class="title-filter filter" style="background-color: @ViewBag.DominantColor;"></div>
+            <div class="title-filter center-container-col">
+                <div class="center-container item-heading">
+                    <h4 >@Model.Title</h4>
+                    <p>$@Model.Price</p>
+
+                </div>
+                <div class="item-description">
+                    <h6 >Description</h6>
+                    <p style ="color: @ViewBag.FontColor;">@Html.Raw(@Model.Description)</p>
+                </div>
+                <div class="center-container category">
+                    <p >@Model.SubCategory.Category.Title - </p>
+                    <p >@Model.SubCategory.Title</p>
+                </div>
+            </div>
+        </div>
+
+            <form class="text-bot center-container">
+                <button asp-action="Listing" class="button cancel">Return</button>
+                <button asp-action="OrderItem" asp-route-id="@Model.Id" class="button create">Order</button>
+            </form>
+
+    </div>
+</div>
+
+

@@ -1,0 +1,128 @@
+﻿/* Style for the sidebar */
+.sidebar {
+    position: fixed;
+    width: 12%;
+    height: 97%;
+    background-color: var(--brown);
+    font-family: 'Your-Font-Here', sans-serif; /* Change the font */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 14px;
+    top: 10px;
+    left: 10px;
+}
+
+/* Styles for the profile icon */
+
+.nav_content {
+    justify-content: space-between;
+    position: relative;
+    height: 100%;
+    padding: 50px 0px;
+}
+
+.employ-img {
+    background-color: #fff;
+    border-radius: 100px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px #071e239c;
+    width: 140px;
+}
+
+    .employ-img img {
+        width: 120px;
+        border: none;
+        box-shadow: none;
+    }
+
+.nav_links {
+    width: 100%;
+}
+
+        .nav_links .link {
+            width: 90%;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #ffffffcb;
+            line-height: 4px;
+            padding: 10px 5px;
+            border-radius: 15px;
+        }
+
+    .nav_links .fa-solid {
+        margin-right: 5px;
+        color: #ffffffc4;
+    }
+
+    .navi-links{
+        list-style: none;
+        text-decoration: none;
+        color: #ffffffc4;
+        font-size: 1.4rem;
+        font-weight: 600;
+        text-shadow: 1px 1px 4px #071e239c;
+        width: 100px;
+    }
+
+        .nav_links a:hover, .navi-links:hover .fa-solid{
+            background-color: none;
+            color: #fff;
+            text-shadow: 1px 1px 2px #071e239c;
+        }
+
+
+.account {
+    font-size: 10px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+    text-align: center;
+    border: none;
+    border-radius: 14px;
+}
+
+    .account p {
+        font-size: 10px;
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 5px;
+        text-shadow: 1px 1px 4px #071e239c;
+    }
+
+/* Style for the sidebar button */
+.sidebar-btn {
+    width: 80%;
+    height: 20px;
+    background-color: #071E23;
+    color: white;
+    font-weight: bold; /* Bold text */
+    border: none; /* No border */
+    border-radius: 8px; /* Border radius of 8px */
+    padding: 10px 15px; /* Adjust padding as needed for button size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-nav {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px var(--green) inset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .select-nav a, .select-nav a:hover, .select-nav a .fa-solid, .select-nav a:hover .fa-solid {
+        color: var(--black);
+        cursor: default;
+    }
+
+
+
+
+

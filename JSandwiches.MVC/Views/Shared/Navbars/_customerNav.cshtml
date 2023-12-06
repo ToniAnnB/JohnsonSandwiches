@@ -1,0 +1,38 @@
+﻿<head>
+    <link href="~/css/horizontal.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="center-container nav-bar" id="navbar">
+    <a id="nav-logo" class="logo gradient-hover" asp-area="" asp-controller="Home" asp-action="Index">Johnson's Sandwiches</a>
+    <div class="center-container">
+        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Listing">Order</a>
+        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Catering</a>
+        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Contact Us</a>
+        <a class="nav-link center-container login-btn" asp-area="" asp-controller="Login" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i>Login</a>
+    </div>
+</div>
+<script>
+    window.onscroll = function () { navbarScroll() };
+    var navbar = document.getElementById("navbar");
+    var navLogo = document.getElementById("nav-logo");
+    var links = document.querySelectorAll(".nav-link");
+
+    var sticky = navbar.offsetTop;
+
+    function navbarScroll() {
+        if (window.pageYOffset > sticky) {
+            navbar.classList.add("scrolled");
+            links.forEach(function (link) {
+                link.classList.add("l-scrolled")
+            });
+            navLogo.classList.add("lo-scrolled")
+        } else {
+            navbar.classList.remove("scrolled");
+            links.forEach(function (link) {
+                link.classList.remove("l-scrolled")
+            });
+            navLogo.classList.remove("lo-scrolled")
+        }
+    }
+</script>

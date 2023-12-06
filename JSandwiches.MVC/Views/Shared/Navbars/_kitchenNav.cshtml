@@ -1,0 +1,28 @@
+﻿<head>
+    <link href="~/css/vertical.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="sidebar">
+    <div class="nav_content center-container-col">
+        <div class="employ-img">
+            <img src="~/images/branding/Johnson’s Sandwiches.png" atl="Johnsons's Sandwich logo" />
+        </div>
+        <div class="nav_links center-container-col">
+            <div class="@(ViewData["Title"].ToString()=="Dashboard"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="Home" asp-action="Dashboard"><i class="fa-solid fa-house"></i>Dashboard</a>
+            </div>
+
+            <div class="@(ViewData["Title"].ToString()=="Menu Item"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="MenuItem" asp-action="Index"><i class="fa-solid fa-utensils"></i>Pending</a>
+            </div>
+
+            <div class="@(ViewData["Title"].ToString()=="Deal Specifics"?"select-nav":"") link">
+                <a class="navi-links center-container" asp-controller="DealSpecifics" asp-action="Index"><i class="fa-solid fa-comments-dollar"></i>Completed</a>
+            </div>
+        </div>
+        <div class="account">
+            <p>janet.doe@email.com</p>
+            <button class="sidebar-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
+        </div>
+    </div>
+</div>

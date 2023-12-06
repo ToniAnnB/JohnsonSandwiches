@@ -1,0 +1,142 @@
+﻿body {
+    padding: 0;
+    font-family: var(--cusBFont);
+}
+.detail-container{
+    margin-top: 12vh;
+    height: 89vh;
+    padding: 30px 70px;
+}
+p, span, h6, h4, strong, i{
+    font-family: var(--cusBFont);
+    color: white;
+}
+
+.content-container {
+    min-height: 100vh;
+    padding: 4%;
+}
+
+    .content-container h1 {
+        font-size: 4.5rem;
+        font-family: var(--brandLFont);
+    }
+
+.details {
+    justify-content: start;
+    gap: 80px;
+}
+
+.img-container {
+    position: relative;
+    box-shadow: 0px 0px 10px 2px var(--shadow);
+}
+
+
+.filter {
+    opacity: 0.8;
+}
+
+.title-filter {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    padding: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    .title-filter h4 {
+        font-size: 3rem;
+        font-family: var(--brandLFont);
+        font-weight: 300;
+        text-shadow: 2px 2px 3px #000a;
+    }
+
+    .title-filter p {
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 3px #000a;
+    }
+
+.text-container {
+    align-self: start;
+    justify-content: space-between;
+    height: 340px;
+    padding: 20px 0px;
+}
+
+.text-top {
+    width: 85%;
+}
+
+    .text-top h1 {
+        font-size: 2.7rem;
+        align-self: start;
+        margin-bottom: 10px;
+    }
+
+    .text-top p {
+        font-size: 2rem;
+    }
+
+.category {
+    align-self: start;
+    margin-top: 20px;
+}
+
+.button {
+    margin-top: 20px;
+    width: 90px;
+    font-size: 1.5rem;
+    padding: 7px 5px;
+    color: #FFF;
+    box-shadow: 2px 2px 1px #000a inset;
+    text-decoration: none;
+}
+
+
+.cancel {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: var(--black);
+
+}
+
+    .cancel:hover {
+        background-color: var(--orange);
+        color: #FFF;
+        transition: 0.7s;
+        transform: scale(1.1) translateX(-10px);
+    }
+
+.create {
+    background-color: var(--red);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+    .create:hover {
+        filter: brightness(1.7);
+        transition: 0.7s;
+        transform: scale(1.1) translateX(10px);
+    }
+    .item-heading{
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    .item-description h6{
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 5px #000a;
+    }
+    .item-description p{
+        font-size: 1.4rem;
+        font-weight: 400;
+    }
+    .text-bot{
+        width: 100%;
+        gap: 10px;
+    }

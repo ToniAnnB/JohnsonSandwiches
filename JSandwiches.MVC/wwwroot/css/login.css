@@ -1,0 +1,80 @@
+﻿.body{
+    font-family: var(--cusBFont);
+}
+.login-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    margin-top: -50px;
+    width: 100%;
+    z-index: -1;
+}
+form {
+    background-color: #2b2628e7;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+}
+    form img {
+        background-color: #fff;
+        padding: 10px;
+        box-sizing: content-box;
+        border-radius: 100%;
+        box-shadow: 4px 2px 4px #000;
+    }
+input.form-control{
+    width: 350px;
+    border: solid 2.7px var(--orange);
+    font-size: 1.7rem;
+    height: 50px!important;
+}
+.input-fields{
+    gap:15px;
+    width: 40%;
+    height: 20%;
+}
+.btn-area {
+    width: 350px;
+    justify-content: space-between;
+    padding: 0px 10px;
+    margin-top: -12px;
+}
+.btn-area a{
+    text-decoration: none;
+    color: var(--orange);
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+.btn-area a:hover{
+    color: white;
+}
+.btn-area button{
+    background-color: transparent;
+    border: solid 1px var(--red);
+    color: #fff;
+    width: 85px;
+    height: 30px;
+    border-radius: 25px;
+}
+.btn-area button:hover{
+    background-color: var(--red);
+    border: none;
+    transition: 0.7s;
+    text-shadow: 1px 1px 3px var(--black);
+}
+.register{
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.2rem;
+}
+    .register span a {
+        color: var(--orange);
+        font-size: 1.2rem;
+    }

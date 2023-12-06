@@ -11,6 +11,7 @@ namespace JSandwiches.MVC.Controllers
         private readonly HttpClient _client;
 
         const string Session_Auth = "LoginSession";
+        const string Session_Role = "RoleSession";
 
         public LoginController(IHttpClientFactory factoryClient)
         {
@@ -48,6 +49,27 @@ namespace JSandwiches.MVC.Controllers
 
                         HttpContext.Session.SetString(Session_Auth, token);
 
+                        var lstRoles = responseData["roles"].ToString();
+
+                        if (lstRoles.Contains("Admin"))
+                        {
+                            HttpContext.Session.SetString(Session_Role, "Admin");
+                        }
+                        else if (lstRoles.Contains("CService"))
+                        {
+                            HttpContext.Session.SetString(Session_Role, "CService");
+                        }
+                        else if (lstRoles.Contains("Kitchen"))
+                        {
+                            HttpContext.Session.SetString(Session_Role, "Kitchen");
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetString(Session_Role, "Customer");
+                        }
+
+
+
 
                         var returnUrl = HttpContext.Session.GetString("returnUrl")!;
                         if (returnUrl == null)
@@ -66,7 +88,6 @@ namespace JSandwiches.MVC.Controllers
         }
 
 
-        [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove(Session_Auth);

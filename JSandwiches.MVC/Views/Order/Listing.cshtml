@@ -1,0 +1,82 @@
+﻿@model IEnumerable<JSandwiches.Models.DTO.FoodDTO.MenuItemDTO>
+@{
+    ViewData["Title"] = "Orders";
+    ViewBag.TabName = "";
+}
+<head>
+    <link href="~/css/menu.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="menu-container center-container">
+    <div class="menu-content center-container-col">
+        <div class="menu-banner center-container">
+            <div class="banner-img">
+                <img src="~/images/branding/veggie smash.jpg" />
+                <div class="banner-overlay">
+                </div>
+                <div class="today-item center-container-col">
+                    <h3>SANDWICH OF THE DAY</h3>
+                    <div class="today-info">
+                        <h5>Veggie Smash</h5>
+                        <p>$12.00</p>
+                    </div>
+                    <div class="today-btn center-container">
+                        <a href="#" class="detail-btn">Details</a>
+                        <a href="#" class="order-btn">Order</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-bottom center-container-col">
+            <div class="search-input-group">
+                <input type="text" name="query" placeholder="Search..." class="search-input" />
+                <button type="submit" class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="bot-bot  center-container">
+                <div class="bot-left">
+                    <div class="search-section">
+                        <select>
+                            <option value="" selected disabled>Category</option>
+                            <option value="poultry">Poultry</option>
+                            <option value="red-meat">Red Meat</option>
+                        </select>
+
+                        <select>
+                            <option value="" selected disabled>Subcategory</option>
+                            <option value="chicken">Chicken</option>
+                            <option value="beef">Beef</option>
+                        </select>
+
+                        <button class="search-btn">Filter</button>
+                    </div>
+                </div>
+                <div class="item-container center-container">
+                    @foreach (var menuItem in Model)
+                    {
+                        <div class="item center-container-col">
+                            <div class="image">
+                                <img src="@menuItem.ImagePath"/>
+                            </div>
+                            <div class="content center-container-col">
+                                <h5>@menuItem.Title</h5>
+                                <div class="item-info center-container-col">
+                                    <p><b>Price:</b> @menuItem.Price</p>
+                                    <p><b>Calories:</b> 320-420 cal</p>
+                                </div>
+                                <div class="item-btns center-container">
+                                    <a asp-controller="Order" asp-action="ItemDetails" asp-route-id="@menuItem.Id" class="order2-btn btn-orange">Details</a>
+                                    <a asp-controller="Order" asp-action="OrderItem" asp-route-id="@menuItem.Id" class="order2-btn btn-red">Order</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

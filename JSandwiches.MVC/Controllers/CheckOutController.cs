@@ -22,6 +22,8 @@ namespace JSandwiches.MVC.Controllers
             PayPalSecret = configuration["PayPalSettings:Secret"]!;
             PayPalUrl = configuration["PayPalSettings:Url"]!;
         }
+
+
         public IActionResult CheckOut()
         {
             ViewBag.PayPalClientId = PayPalClientId;
@@ -34,64 +36,6 @@ namespace JSandwiches.MVC.Controllers
                 ReceiptNumber = "0382073091ydg2893798y"
             };
             return View(checkOut);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> CreateOrder()
-        {
-            var checkOut = new CheckOutModel()
-            {
-                TotalAmount = "390.00",
-                ReceiptNumber = "0382073091ydg2893798y"
-            };
-
-            JsonObject createOrderRequest = new JsonObject();
-            createOrderRequest.Add("intent", "CAPTURE");
-
-            JsonObject amount = new JsonObject();
-            amount.Add("currency_code", "USD");
-            amount.Add("value", checkOut.TotalAmount.ToString());
-
-            JsonObject purchaseUnit1 = new JsonObject();
-            purchaseUnit1.Add("amount", amount);
-
-            JsonArray purchaseUnits = new JsonArray();
-            purchaseUnits.Add(purchaseUnit1);
-
-            createOrderRequest.Add("purchase_units", purchaseUnits);
-
-            string accessToken = await GetPayPalAccessToken();
-
-            string url = $"{PayPalUrl}/v2/checkout/orders";
-
-            string orderId;
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
-                var content = new StringContent(JsonSerializer.Serialize(createOrderRequest), null, "application/json");
-                var result = await client.PostAsync(url, content);
-
-                if (result.IsSuccessStatusCode)
-                {
-                    var data = await result.Content.ReadAsStringAsync();
-
-                    var jsonResponse = JsonNode.Parse(data);
-                    if (jsonResponse != null)
-                    {
-                        orderId = jsonResponse["id"].ToString();
-
-                        var response = new
-                        {
-                            id = orderId
-                        };
-
-                        return new JsonResult(response);
-                    }
-                }
-                return new JsonResult(null);
-            }
-
         }
 
 
@@ -148,10 +92,8 @@ namespace JSandwiches.MVC.Controllers
         private async Task<string> GetPayPalAccessToken()
         {
             string accessToken;
-            //var url = $"{PayPalUrl}/v1/oauth2/token" ;
             var url = $"https://api-m.sandbox.paypal.com/v1/oauth2/token";
 
-            //var request = new HttpRequestMessage(HttpMethod.Post, "https://api-m.sandbox.paypal.com/v1/oauth2/token");
 
             using (var httpClient = new HttpClient())
             {

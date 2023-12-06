@@ -1,0 +1,98 @@
+﻿@model JSandwiches.MVC.Models.ViewModels.OrderVM
+@{
+    ViewData["Title"] = "Order Sandwhich";
+    ViewBag.TabName = "";
+}
+
+<div class="order-container">
+    <form method="post">
+        <div class="top-section center-container">
+            <div class="item-image">
+                <img src="@Model.Order.MenuItemAddOn.MenuItem.ImagePath" />
+            </div>
+            <div class="item-addOns center-container">
+                <label>Add On</label>
+                <div class="add-checkboxes center-container-col">
+                    @foreach(var checkbox in Model.LstAddOnsCheckBox)
+                    {
+                        <input type="checkbox" value="@checkbox" />
+                    }
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="bot-section center-container-col">
+            <div class="item-cost">
+                <h2>@Model.Order.MenuItemAddOn.MenuItem.Title</h2>
+                <div class="item-calculation">
+                    <p>@Model.Order.MenuItemAddOn.MenuItem.Price</p>
+                    <p>x @Model.Order.Amount</p>
+                </div>
+            </div>
+            <div class="addOn-cost">
+                <h2>Add Ons</h2>
+                <div class="addOns">
+                    @foreach(var hi in Model.LstAddOnsCheckBox)
+                    {
+                        <div class="selected-addOn">
+                            <label>@hi.AddOn.Title</label>
+                            <p class="checkbox">@hi.AddOn.Price</p>
+                        </div>
+                    }
+                    <div>
+                        <label>Add On Total: </label>
+                        <p id="addON-total"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="total-cost">
+                <label>Total</label>
+                <p id="toatl-cost"></p>
+            </div>
+            <div class="btn-container center-container">
+                <a asp-action="Listing">Cancel</a>
+                <a asp-action="AddToCart">Add to Cart</a>
+            </div>
+            <div class="btn2-container center-container">
+                <a asp-action="CheckOut">CheckOut</a>
+                <a asp-action="Listing">Contune Ordering</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.checkbox').change(function () {
+            updateSelectedCheckboxes();
+
+            // Get an array of selected checkbox IDs
+            var selectedCheckboxIds = $('.checkbox:checked').map(function () {
+                return this.id;
+            }).get();
+            calculateTotalPrice(selectedCheckboxIds);
+        });
+    });
+
+    function updatePrice() {
+        // Add logic to calculate the price based on checkbox selections
+        var totalPrice = calculateTotalPrice();
+
+        // Update the display element
+        $('#addON-total').text(totalPrice);
+    }
+
+    function calculateTotalPrice(selectedCheckboxIds) {
+        $.ajax({
+            url: '/Order/CalculateTotalPrice',
+            type: 'POST',
+            data: { selectedCheckboxIds: selectedCheckboxIds },
+            success: function (data) {
+                // Update the display element with the calculated total
+                $('#priceDisplay').text('Total Price: ' + data.totalPrice);
+            },
+            error: function () {
+                console.error('Error calculating total price');
+            }
+        });
+    }
+</script>
