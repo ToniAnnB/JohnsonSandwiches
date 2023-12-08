@@ -7,9 +7,13 @@ namespace JSandwiches.MVC.Models.ViewModels
     {
         public OrderDTO Order { get; set; }
 
+        public MenuItemAddOnDTO MenuItemAddOn { get; set; }
+
         public List<AddOnCheckBox> LstAddOnsCheckBox { get; set; }
         public List<string> SelectedAddOns {  get; set; }
 
-        public List<MenuItemDTO> LstMenuItem { get; set; }
+        public List<MenuItemAddOnDTO> LstMenuItem { get; set; }
+        public bool ExistInCart { get; set; }
+
     }
 }

@@ -28,6 +28,25 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
+            @if (TempData["AlertMessage"] != null)
+            {
+                switch (TempData["AlertMessage"].ToString())
+                {
+                    case "Success":
+                        <div class="alert alert-success mt-4">
+                            <h1>Success</h1>
+                            <p>Record was sucessfully added to the database</p>
+                        </div>
+                        break;
+
+                    case "Success2":
+                        <div class="alert alert-success mt-4">
+                            <h1>Success</h1>
+                            <p>Record was sucessfully updated</p>
+                        </div>
+                        break;
+                }
+            }
 
             <div class="index-content">
                 <p class="mb-5">

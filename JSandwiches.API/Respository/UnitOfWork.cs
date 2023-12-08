@@ -22,6 +22,7 @@ namespace JSandwiches.API.Respository
         private IGenericRespository<Order> _order;
         private IGenericRespository<OrderStatus> _orderStatus;
         private IGenericRespository<Receipt> _receipt;
+        private IGenericRespository<Payment> _payment;
         #endregion
 
         #region Special Features related
@@ -57,6 +58,7 @@ namespace JSandwiches.API.Respository
         public IGenericRespository<Order> Order => _order ??= new GenericRespository<Order>(_context);
         public IGenericRespository<OrderStatus> OrderStatus => _orderStatus ??= new GenericRespository<OrderStatus>(_context);
         public IGenericRespository<Receipt> Receipt => _receipt ??= new GenericRespository<Receipt>(_context);
+        public IGenericRespository<Payment> Payment => _payment ??= new GenericRespository<Payment>(_context);
         #endregion
 
         #region Special Features related

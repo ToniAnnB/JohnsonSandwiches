@@ -23,6 +23,7 @@ builder.Services.AddHttpClient("AuthAPI", httpClient =>
     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
     httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpClientFactory");
 });
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddMvc()
     .AddSessionStateTempDataProvider();

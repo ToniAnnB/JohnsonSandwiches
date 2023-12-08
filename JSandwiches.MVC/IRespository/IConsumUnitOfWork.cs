@@ -19,6 +19,7 @@ namespace JSandwiches.MVC.IRespository
          IGenConsumRespo<OrderDTO> Order {get;}
          IGenConsumRespo<OrderStatusDTO> OrderStatus {get;}
          IGenConsumRespo<ReceiptDTO> Receipt {get;}
+         IGenConsumRespo<PaymentDTO> Payment {get;}
         #endregion
 
         #region Special Features related

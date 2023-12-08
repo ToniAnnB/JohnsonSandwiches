@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
 using JSandwiches.Models.DTO.FoodDTO;
+using JSandwiches.Models.DTO.OrderDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.Food
@@ -25,14 +26,14 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAddOns()
+        public async Task<IActionResult> GetOrderStatus()
         {
-            var addOns = await _unitOfWork.AddOn.GetAll(null, null, null);
+            var orderStatus = await _unitOfWork.OrderStatus.GetAll(null, null, null);
 
-            if (addOns == null)
+            if (orderStatus == null)
                 return NotFound();
 
-            var result = _mapper.Map<IList<AddOnDTO>>(addOns);
+            var result = _mapper.Map<IList<OrderStatusDTO>>(orderStatus);
             return Ok(result);
         }
 
@@ -43,17 +44,17 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAddOn(int id)
+        public async Task<IActionResult> GetOrderStatus(int id)
         {
             if (id < 1)
                 return BadRequest();
 
-            var addOn = await _unitOfWork.AddOn.Get(q => q.Id == id, null);
+            var OrderStatus = await _unitOfWork.OrderStatus.Get(q => q.Id == id, null);
 
-            if (addOn == null)
+            if (OrderStatus == null)
                 return NotFound();
 
-            var result = _mapper.Map<AddOnDTO>(addOn);
+            var result = _mapper.Map<OrderStatusDTO>(OrderStatus);
             return Ok(result);
         }
 

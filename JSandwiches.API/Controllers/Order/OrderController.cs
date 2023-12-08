@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using JSandwiches.API.IRespository;
-using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.Models.Food;
+using JSandwiches.Models.DTO.OrderDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JSandwiches.API.Controllers.Food
@@ -26,14 +25,14 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAddOns()
+        public async Task<IActionResult> GetOrders()
         {
-            var addOns = await _unitOfWork.AddOn.GetAll(null, null, null);
+            var orders = await _unitOfWork.Order.GetAll(null, null, null);
 
-            if (addOns == null)
+            if (orders == null)
                 return NotFound();
 
-            var result = _mapper.Map<IList<AddOnDTO>>(addOns);
+            var result = _mapper.Map<IList<OrderDTO>>(orders);
             return Ok(result);
         }
 
@@ -45,17 +44,17 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAddOn(int id)
+        public async Task<IActionResult> GetOrder(int id)
         {
             if (id < 1)
                 return BadRequest();
 
-            var addOn = await _unitOfWork.AddOn.Get(q => q.Id == id, null);
+            var order = await _unitOfWork.Order.Get(q => q.Id == id, null);
 
-            if (addOn == null)
+            if (order == null)
                 return NotFound();
 
-            var result = _mapper.Map<AddOnDTO>(addOn);
+            var result = _mapper.Map<OrderDTO>(order);
             return Ok(result);
         }
 
@@ -65,20 +64,18 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateAddOn([FromBody] CreateAddOnDTO addOn)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDTO order)
         {
-            if (addOn == null)
+            if (order == null)
                 return BadRequest();
 
-            if (ModelState.IsValid)
-            {
-                var result = _mapper.Map<AddOn>(addOn);
-                if (_unitOfWork.AddOn.Insert(result).IsCompletedSuccessfully)
+
+                var result = _mapper.Map<JSandwiches.Models.Order.Order>(order);
+                if (_unitOfWork.Order.Insert(result).IsCompletedSuccessfully)
                     await _unitOfWork.Save();
                 return Created("api/[controller]", result);
             }
-            return BadRequest();
-        }
+  
 
 
 
@@ -86,15 +83,15 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> EditAddOn([FromBody] AddOnDTO addOn)
+        public async Task<IActionResult> EditOrder([FromBody] OrderDTO order)
         {
-            if (addOn == null || addOn.Id < 1)
+            if (order == null || order.Id < 1)
                 return BadRequest();
 
             if (ModelState.IsValid)
             {
-                var result = _mapper.Map<AddOn>(addOn);
-                _unitOfWork.AddOn.Update(result);
+                var result = _mapper.Map<JSandwiches.Models.Order.Order>(order);
+                _unitOfWork.Order.Update(result);
                 await _unitOfWork.Save();
                 return Ok(result);
             }
@@ -107,12 +104,12 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteAddOn(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
             if (id < 1)
                 return BadRequest();
 
-            await _unitOfWork.AddOn.Delete(id);
+            await _unitOfWork.Order.Delete(id);
             await _unitOfWork.Save();
             return NoContent();
 

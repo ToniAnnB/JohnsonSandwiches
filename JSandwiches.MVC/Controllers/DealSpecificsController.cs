@@ -98,8 +98,6 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(DealSpecificsVM vm)
         {
-            //var nImagePah = vm.DealSpecificsDTO.ImagePath.Replace( @"\\", @"backslash");
-            // mvc\server\uploads\dd0de68e - 9960 - 4265 - 898b - 56f1dea10397_summerheat.png
 
             var status = await _unitOfWork.DealSpecifics.Update(vm.DealSpecificsDTO, vm.DealSpecificsDTO.Id);
             if (status == true)

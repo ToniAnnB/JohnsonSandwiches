@@ -1,28 +1,89 @@
-﻿@model JSandwiches.MVC.Models.CheckOutModel
+﻿@model IEnumerable<JSandwiches.MVC.Models.ViewModels.PaymentVM>
 @{
     var clientId = ViewBag.PayPalClientId;
     var secret = ViewBag.PayPalSecret;
     var url = ViewBag.PayPalUrl;
     ViewBag.TabName = "";
 }
-
+<head>
+    <link href="~/css/cart.css" rel="stylesheet" asp-append-version="true" />
+</head>
 <script src="https://www.paypal.com/sdk/js?client-id=@(clientId)&currency=USD"></script>
 
 
+@if (Model.Count() > 0)
+{
+    <div class="checkout-container center-container-col">
+        <h1>Shopping Cart</h1>
+        <div class="order-content center-container">
+            <div class="left-section center-container-col">
+                <h2>Item Details</h2>
+                @foreach (var order in Model)
+                {
+                    <div class="container3 center-container">
+                        <div class="card-left center-container">
+                            <div class="item-image">
+                                <img src="@order.MenuItem.ImagePath" />
+                                <div class="item-details center-container">
+                                    <h3>@order.MenuItem.Title</h3>
+                                    <p>"x @order.Order.Amount"</p>
+                                </div>
+                            </div>
+                            <div class="center-container-col">
+                                <div class="item-addOns center-container">
+                                    <label>Add Ons:</label>
+                                    <div class="add-checkboxes center-container-col">
+                                        @foreach (var addOn in order.lstAddOns)
+                                        {
+                                            <div class="center-container checkbox-contain">
+                                                <label>@addOn.Title</label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="item-quantity center-container-col">
+                                    <label for="quantity">Special Request:</label>
+                                    <p>@order.Order.SpecialRequest</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-right center-container-col">
+                            <div class="total-cost center-container">
+                                <label>Total:</label>
+                                <p id="total-cost" class="order-price">@order.Order.Price</p>
+                            </div>
+                            <form method="post" asp-controller="CheckOut" asp-action="Remove" asp-route-id="@order.Order.Id">
+                                <button type="submit"  class="button create">Remove From Cart</button>
+                            </form>
 
-<div>
-    <label>Total</label>
-    <input asp-for="@Model.TotalAmount" />
-</div>
-<div>
-    <label>Receipt Number</label>
-    <input asp-for="@Model.ReceiptNumber" />
-</div>
-<div id="notification-container"></div>
-<div id="paypal-button-container">
-</div>
+                        </div>
+                    </div>
 
+                }
+                <a asp-controller="Order" asp-action="Listing" class="continue-btn2">Continue Ordering</a>
+            </div>
 
+            <div class="right-section center-container-col">
+                <h2>Payment Details</h2>
+                <div class="center-container">
+                    <label>Total Cost:</label>
+                    <p id="total-cost-display"></p>
+                </div>
+                <div class="center-container-col">
+                    <div id="notification-container"></div>
+                    <div id="paypal-button-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="cart-image center-container">
+        <img src="/images/branding/cart2.png" />
+        <a asp-controller="Order" asp-action="Listing" class="continue-btn">Start Ordering</a>
+    </div>
+}
 
 <script>
     let paypal_buttons = paypal.Buttons({
@@ -57,7 +118,7 @@
                     }
                     else {
                         document.getElementById("notification-container").innerHTML =
-                            '<div class="alert alert-danger" role="alert">'+details.value+' !<div>';
+                            '<div class="alert alert-danger" role="alert">' + details.value + ' !<div>';
                     }
                     //alert('Transaction completed by ' + details.payer.name.given_name);
                 });
@@ -80,6 +141,23 @@
                 '<div class="alert alert-danger" role="alert">Failed to create order!!!<div>';
         }
     });
+
+    // Calculate and update total cost
+    function updateTotalCost() {
+        let totalCost = 0;
+
+        // Iterate through each order and accumulate the total cost
+        document.querySelectorAll('.order-price').forEach((priceElement) => {
+            totalCost += parseFloat(priceElement.textContent);
+        });
+
+        // Display the total cost in the "Total Cost" element
+        document.querySelector('#total-cost-display').textContent = totalCost.toFixed(2);
+    }
+
+    // Initial update when the page loads
+    updateTotalCost();
+
+    // Render PayPal buttons
     paypal_buttons.render('#paypal-button-container');
 </script>
-

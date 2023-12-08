@@ -24,6 +24,7 @@ namespace JSandwiches.Models.Data
         public DbSet<Order.Order> Order { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<Receipt> Receipt { get; set; }
+        public DbSet<Payment> Payment { get; set; }
         #endregion
 
         #region Special Features related

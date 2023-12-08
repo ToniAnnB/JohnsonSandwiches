@@ -11,11 +11,6 @@ namespace JSandwiches.Models.Order
 
 
 
-        public int MenuItemAddOnID { get; set; }
-        [ForeignKey("MenuItemAddOnID")]
-        public virtual MenuItemAddOn MenuItemAddOn { get; set; }
-
-
         public int Amount { get; set; }
 
 
@@ -28,14 +23,9 @@ namespace JSandwiches.Models.Order
         [Column(TypeName = "varchar(250)")]
         public string? SpecialRequest { get; set; }
 
-        public int OrderStatusID { get; set; }
+        public int? OrderStatusID { get; set; }
         [ForeignKey("OrderStausID")]
-        public virtual OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus? OrderStatus { get; set; }
 
-
-        public void CalcuPrice(decimal itemPrice)
-        {
-            Price = Amount * itemPrice;
-        }
     }
 }

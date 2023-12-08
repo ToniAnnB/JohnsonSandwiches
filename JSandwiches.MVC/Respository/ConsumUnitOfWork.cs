@@ -26,6 +26,7 @@ namespace JSandwiches.MVC.Respository
         private IGenConsumRespo<OrderDTO> _order;
         private IGenConsumRespo<OrderStatusDTO> _orderStatus;
         private IGenConsumRespo<ReceiptDTO> _receipt;
+        private IGenConsumRespo<PaymentDTO> _payment;
         #endregion
 
         #region Special Features related
@@ -56,6 +57,7 @@ namespace JSandwiches.MVC.Respository
         public IGenConsumRespo<OrderDTO> Order => _order ??= new GenConsumRespo<OrderDTO>("https://localhost:44381/api/Order", _mapper);
         public IGenConsumRespo<OrderStatusDTO> OrderStatus => _orderStatus ??= new GenConsumRespo<OrderStatusDTO>("https://localhost:44381/api/OrderStatus", _mapper);
         public IGenConsumRespo<ReceiptDTO> Receipt => _receipt ??= new GenConsumRespo<ReceiptDTO>("https://localhost:44381/api/Receipt", _mapper);
+        public IGenConsumRespo<PaymentDTO> Payment => _payment ??= new GenConsumRespo<PaymentDTO>("https://localhost:44381/api/Payment", _mapper);
         #endregion
 
         #region Special Features related

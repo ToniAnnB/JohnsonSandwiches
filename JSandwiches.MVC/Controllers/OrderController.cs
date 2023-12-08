@@ -3,8 +3,10 @@ using JSandwiches.Models.DTO.OrderDTO;
 using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
+using JSandwiches.MVC.Utils;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace JSandwiches.MVC.Controllers
 {
@@ -56,33 +58,96 @@ namespace JSandwiches.MVC.Controllers
                 return RedirectToAction("NotFound", "Home");
             return RedirectToAction("ErrorPage", "Home");
         }
-        
+
         public async Task<IActionResult> OrderItem(int id)
         {
             var menuItem = await _unitOfWork.MenuItem.GetById(id);
+            var lstAddOns = await _unitOfWork.AddOn.GetAll();
             var vm = new OrderVM()
             {
-                Order = new OrderDTO()
+                MenuItemAddOn = new MenuItemAddOnDTO()
                 {
-                    MenuItemAddOn = new MenuItemAddOnDTO()
-                    {
-                        MenuItem = menuItem.Item1
-                    },
-                    
+                    MenuItem = menuItem.Item1
                 },
-
+                Order = new OrderDTO(),
+                LstAddOnsCheckBox = lstAddOns.Select(x => new AddOnCheckBox()
+                {
+                    AddOn = x,
+                    IsChecked = false
+                }).ToList(),
+                ExistInCart = false
             };
-            return View();
+            var baseUrl = "https://localhost:44356/images/";
+
+            vm.MenuItemAddOn.MenuItem.ImagePath = baseUrl + vm.MenuItemAddOn.MenuItem.ImagePath;
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> OrderItem(OrderVM vm)
+        {
+            //calculating price
+            decimal addOnTotal = 0; 
+
+            foreach(var id in vm.SelectedAddOns)
+            {
+                var addOn = (await _unitOfWork.AddOn.GetById(Convert.ToInt32(id))).Item1;
+                addOnTotal += addOn.Price;
+            }
+            var menuItem = await _unitOfWork.MenuItem.GetById(vm.MenuItemAddOn.MenuItem.Id);
+            vm.Order.Price = (menuItem.Item1.Price * vm.Order.Amount) + addOnTotal;
+            vm.Order.Amount = vm.Order.Amount;
+            vm.Order.OrderStatusID = 1;
+
+            var response = await _unitOfWork.Order.Create2(vm.Order);
+
+            //collect list of selected task completed
+            vm.LstMenuItem = new List<MenuItemAddOnDTO>();
+
+            foreach (var id in vm.SelectedAddOns)
+            {
+                var menuItemAddOn = new MenuItemAddOnDTO();
+                menuItemAddOn.MenuItemID = vm.MenuItemAddOn.MenuItem.Id;
+                menuItemAddOn.AddOnID = Convert.ToInt32(id);
+                menuItemAddOn.OrderID = response.Item2.Id;
+                vm.LstMenuItem.Add(menuItemAddOn);
+            }
+
+            // saves the tasks to database
+            foreach (var item in vm.LstMenuItem)
+            {
+                var response2 = await _unitOfWork.MenuItemAddOn.Create(item);
+
+            }
+
+
+            List<ShopCart> lstItems = new List<ShopCart>();
+
+            if (HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart) != null
+               && HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart).Count() > 0)
+            {
+                lstItems = HttpContext.Session.Get<List<ShopCart>>(AppConst.Cart);
+            }
+
+            foreach (var item in lstItems)
+            {
+                if (item.OrderID == response.Item2.Id)
+                {
+                    vm.ExistInCart = true;
+                }
+            }
+            if (vm.ExistInCart != true)
+            {
+                var cart = new ShopCart() { OrderID = response.Item2.Id };
+
+                lstItems.Add(cart);
+                HttpContext.Session.Set(AppConst.Cart, lstItems);
+            }
+
+            return RedirectToAction("CheckOut", "CheckOut");
+
         }
 
-        //public JsonResult CalculateTotalPrice(List<int> selectedCheckboxIds)
-        //{
-        //    Implement your calculation logic based on selectedCheckboxIds
-        //    Replace this with your actual logic
-        //    var totalPrice = YourCalculationMethod(selectedCheckboxIds);
 
-        //    return Json(new { totalPrice });
-        //}
 
 
     }

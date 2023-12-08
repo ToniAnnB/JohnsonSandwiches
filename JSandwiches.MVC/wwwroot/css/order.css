@@ -1,0 +1,141 @@
+﻿body{
+    font-family: var(--cusBFont);
+    background-color: var(--brown);
+}
+.order-container{
+    margin-top: 12vh;
+    height: 89vh;
+    overflow: hidden;
+}
+.center-container {
+    gap: 7px;
+}
+
+form {
+    height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.item-image{
+    width: 500px;
+    height: 290px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px #000a;
+}
+.item-image img{
+    width: 100%;
+}
+.top-section{
+    width: 70%;
+    gap: 25px;
+    height: 100%;
+}
+.top-section h1{
+    font-size: 5.5rem;
+    color: white;
+    font-family: var(--brandLFont);
+    text-shadow: 2px 2px 5px #000a;
+}
+
+.top-top {
+    gap: 20px;
+}
+.item-special textarea{
+    width: 700px;
+    height: 100px;
+    padding: 10px;
+}
+.item-special label {
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px #000000b7;
+    color: white;
+}
+.item-addOns{
+    align-self: flex-start;
+    gap: 15px;
+    align-items: flex-start;
+}
+.item-quantity {
+    gap: 15px;
+}
+.item-addOns label, .item-quantity label {
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px #000000b7;
+    color: white;
+}
+
+.add-checkboxes {
+    gap: 10px;
+    height: 250px;
+    align-items: flex-start;
+}
+.checkbox-contain label {
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+.bot-section {
+    width: 30%;
+    background-color: white;
+    height: 100%;
+    box-shadow: 2px 2px 8px #000a inset,-2px -2px 8px #000a inset;
+}
+.item-cost h2{
+    font-size: 3rem;
+    font-family: var(--brandLFont);
+}
+.bot-section label{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.bot-section p{
+    font-size: 1.7rem;
+}
+.button {
+    margin-top: 20px;
+    width: 90px;
+    font-size: 1.5rem;
+    padding: 7px 5px;
+    color: #FFF;
+    box-shadow: 2px 2px 1px #000a inset;
+    text-decoration: none;
+}
+.cancel {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: var(--black);
+}
+
+    .cancel:hover {
+        background-color: var(--orange);
+        color: #FFF;
+        transition: 0.7s;
+        transform: scale(1.1) translateX(-10px);
+    }
+
+.create {
+    background-color: var(--green);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+    .create:hover {
+        filter: brightness(1.7);
+        transition: 0.7s;
+        color: white;
+    }
+
+.cancel2 {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: var(--black);
+}
+
+    .cancel2:hover {
+        background-color: var(--red);
+        color: #FFF;
+        transition: 0.7s;
+    }

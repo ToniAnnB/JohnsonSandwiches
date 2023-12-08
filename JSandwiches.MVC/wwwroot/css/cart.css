@@ -1,0 +1,193 @@
+﻿body{
+    background-color: var(--brown);
+    font-family: var(--cusBFont);
+}
+.checkout-container{
+    width: 100%;
+    height: 100vh;
+    padding: 50px 100px;
+
+}
+.checkout-container h1{
+    font-family: var(--brandLFont);
+    font-size: 4rem;
+    color: white;
+    text-shadow: 2px 1px 4px #000a;
+}
+.order-content{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    margin-top: 20px;
+    box-shadow: 2px 2px 4px #000a inset;
+}
+
+.item-image {
+    width: 200px;
+    height: 120px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px #000a;
+    position: relative;
+}
+
+.container3{
+    border: 0.5px solid var(--red);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 3px #000b ;
+    gap: 20px;
+}
+
+    .item-image img {
+        width: 100%;
+    }
+.left-section{
+    width: 70%;
+    height: 100%;
+    justify-content: start;
+    align-items: start;
+    padding: 30px;
+    gap: 15px;
+}
+.card-left{
+    gap: 20px;
+}
+.right-section{
+    background-color: var(--black);
+    width: 30%;
+    height: 100%;
+    gap: 10px;
+}
+.item-special label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px #000000b7;
+    color: white;
+}
+
+.item-addOns {
+    align-self: flex-start;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.item-quantity {
+    gap: 5px;
+    align-items: start;
+}
+
+    .item-addOns label, .item-quantity label {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--black);
+    }
+.checkbox-contain label {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+.item-quantity p{
+    width: 190px;
+    height: 40px;
+    border: solid var(--black) 0.2px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.add-checkboxes{
+    width: 120px;
+    height: 50px;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: start;
+}
+.item-details {
+    position: absolute;
+    bottom: 5px;
+    padding: 2px 8px;
+    left: 0px;
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    background-color: #0000007c;
+    gap: 7px;
+
+}
+.item-details h3{
+    font-size: 1.8rem;
+    font-family: var(--brandLFont);
+}
+.item-details h3, .item-details p{
+    color: white;
+}
+.card-right{
+    gap: 10px;
+}
+    .card-right button{
+        font-size: 1.2rem;
+        padding: 5px 10px;
+        background-color: transparent;
+        border: 0.5px solid #808080;
+        border-radius: 8px;
+        color: #808080;
+        text-decoration: none;
+    }
+    .card-right label {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--black);
+    }
+        .card-right button:hover {
+            background-color: var(--red);
+            border: 0.5px solid var(--red);
+            border-radius: 8px;
+            color: white;
+            box-shadow: 1px 1px 2px #0000007c;
+            transition: 0.8s;
+        }
+        .total-cost{
+            gap: 5px;
+        }
+        .right-section h2, .right-section label, .right-section p{
+            color: white;
+        }
+        .cart-image{
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            padding: 50px;
+        }
+        .cart-image img{
+            height: 70%;
+        }
+        .continue-btn{
+            border: 0.5px solid white;
+            padding: 5px 15px;
+            margin-top: 10px;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .continue-btn:hover{
+            background-color: var(--orange);
+            transition: 0.8s;
+            transform: scale(1.1);
+            box-shadow: 2px 2px 5px #000a;
+            color: white;
+        }
+.continue-btn2 {
+    border: 0.5px solid var(--orange);
+    padding: 5px 15px;
+    margin-top: 10px;
+    border-radius: 25px;
+    color: var(--orange);
+    text-decoration: none;
+    font-weight: 600;
+}
+        .continue-btn2:hover{
+            background-color: white;
+            transition: 0.8s;
+            transform: scale(1.1);
+            box-shadow: 2px 2px 5px #000a;
+            color: var(--orange);
+        }

@@ -9,17 +9,12 @@ namespace JSandwiches.Models.DTO.OrderDTO
         public int Id { get; set; }
 
 
-        public MenuItemAddOnDTO? MenuItemAddOn { get; set; }
-
-
         public OrderStatusDTO? OrderStatus { get; set; }
 
 
     }
     public class CreateOrderDTO
     {
-        [Required]
-        public int MenuItemAddOnID { get; set; }
 
         [Required]
         public int Amount { get; set; }
@@ -34,12 +29,6 @@ namespace JSandwiches.Models.DTO.OrderDTO
 
         [Required]
         public int OrderStatusID { get; set; }
-
-
-        public void CalcuPrice(decimal itemPrice)
-        {
-            Price = Amount * itemPrice;
-        }
 
 
     }

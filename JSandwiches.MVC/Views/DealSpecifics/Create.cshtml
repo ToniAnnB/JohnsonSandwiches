@@ -16,6 +16,13 @@
         <h1>Creation Form</h1>
         <p>Please fill in the form below</p>
     </div>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="alert alert-danger mt-4">
+            <h1>Failure</h1>
+            <p>Process Failed. Please try a later</p>
+        </div>
+    }
 
     <form asp-action="Create" class="form" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

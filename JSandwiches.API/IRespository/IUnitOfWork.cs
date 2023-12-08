@@ -21,6 +21,7 @@ namespace JSandwiches.API.IRespository
         IGenericRespository<MenuItemAddOn> MenuItemAddOn { get; }
         IGenericRespository<MenuItemRating> MenuItemRating { get; }
         IGenericRespository<Order> Order { get; }
+        IGenericRespository<Payment> Payment { get; }
         IGenericRespository<OrderStatus> OrderStatus { get; }
         IGenericRespository<Parish> Parish { get; }
         IGenericRespository<Rating> Rating { get; }

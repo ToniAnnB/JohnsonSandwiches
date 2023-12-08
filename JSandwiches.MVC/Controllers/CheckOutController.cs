@@ -1,7 +1,14 @@
 ﻿using Azure.Core;
+using JSandwiches.Models.DTO.FoodDTO;
+using JSandwiches.Models.DTO.OrderDTO;
+using JSandwiches.Models.Food;
 using JSandwiches.Models.Order;
+using JSandwiches.MVC.IRespository;
 using JSandwiches.MVC.Models;
+using JSandwiches.MVC.Models.ViewModels;
+using JSandwiches.MVC.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -11,31 +18,169 @@ namespace JSandwiches.MVC.Controllers
     [IgnoreAntiforgeryToken]
     public class CheckOutController : Controller
     {
+        private readonly IConsumUnitOfWork _unitOfWork;
         public string PayPalClientId { get; set; } = null;
         private string PayPalSecret { get; set; } = null;
         public string PayPalUrl { get; set; } = null;
 
 
-        public CheckOutController(IConfiguration configuration)
+        public CheckOutController(IConfiguration configuration, IConsumUnitOfWork unitOfWork)
         {
             PayPalClientId = configuration["PayPalSettings:ClientId"]!;
             PayPalSecret = configuration["PayPalSettings:Secret"]!;
             PayPalUrl = configuration["PayPalSettings:Url"]!;
+            _unitOfWork = unitOfWork;
         }
-
-
-        public IActionResult CheckOut()
+        public async Task<IActionResult> CheckOut()
         {
+            List<ShopCart> lstItems = new List<ShopCart>();
+            if (HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart) != null
+                && HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart).Count() > 0)
+            {
+                lstItems = HttpContext.Session.Get<List<ShopCart>>(AppConst.Cart);
+            }
+
+            //list of order ids
+            List<int> lstCartOrderID = lstItems.Select(x => x.OrderID).ToList();
+
+            List<PaymentVM> lstVM = new List<PaymentVM>();
+            var lstMenuItemAddOn = (await _unitOfWork.MenuItemAddOn.GetAll()).ToList();
+            var lstOrder = (await _unitOfWork.Order.GetAll()).ToList();
+
+            //list of selected orders associated with customer session
+            var lstCartOrder = new List<OrderDTO>();
+            foreach (var order in lstOrder)
+            {
+                foreach (var id in lstCartOrderID)
+                {
+                    if (order.Id == id)
+                        lstCartOrder.Add(order);
+                }
+            }
+
+            //payment details being gathered
+            foreach (var order in lstCartOrder)
+            {
+                var lstSelectedItems = lstMenuItemAddOn.Where(x => x.OrderID == order.Id).ToList();
+                var vm = new PaymentVM()
+                {
+                    Order = order,
+                    MenuItem = lstSelectedItems.Select(x => x.MenuItem).FirstOrDefault(),
+                    lstAddOns = lstSelectedItems.Select(x => x.AddOn).ToList()
+                };
+                var baseUrl = "https://localhost:44356/images/";
+                vm.MenuItem.ImagePath = baseUrl + vm.MenuItem.ImagePath;
+                lstVM.Add(vm);
+            }
+
             ViewBag.PayPalClientId = PayPalClientId;
             ViewBag.PayPalSecret = PayPalSecret;
             ViewBag.PayPalUrl = PayPalUrl;
 
+            return View(lstVM);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> CreateOrder()
+        {
+            List<ShopCart> lstItems = new List<ShopCart>();
+            if (HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart) != null
+                && HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart).Count() > 0)
+            {
+                lstItems = HttpContext.Session.Get<List<ShopCart>>(AppConst.Cart);
+            }
+
+            //list of order ids
+            List<int> lstCartOrderID = lstItems.Select(x => x.OrderID).ToList();
+
+            List<PaymentVM> lstVM = new List<PaymentVM>();
+            var lstMenuItemAddOn = (await _unitOfWork.MenuItemAddOn.GetAll()).ToList();
+            var lstOrder = (await _unitOfWork.Order.GetAll()).ToList();
+
+            //list of selected orders associated with customer session
+            var lstCartOrder = new List<OrderDTO>();
+            foreach (var order in lstOrder)
+            {
+                foreach (var id in lstCartOrderID)
+                {
+                    if (order.Id == id)
+                        lstCartOrder.Add(order);
+                }
+            }
+
+            decimal totalCost = 0;
+            //payment details being gathered
+            foreach (var order in lstCartOrder)
+            {
+                var lstSelectedItems = lstMenuItemAddOn.Where(x => x.OrderID == order.Id).ToList();
+                var vm = new PaymentVM()
+                {
+                    Order = order,
+                    MenuItem = lstSelectedItems.Select(x => x.MenuItem).FirstOrDefault(),
+                    lstAddOns = lstSelectedItems.Select(x => x.AddOn).ToList()
+                };
+                var baseUrl = "https://localhost:44356/images/";
+                vm.MenuItem.ImagePath = baseUrl + vm.MenuItem.ImagePath;
+                totalCost += order.Price;
+                lstVM.Add(vm);
+            }
+            
+            string purchaseID = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+        .Substring(0, 22).Replace("/", "_").Replace("+", "-").TrimEnd('=');
+
             var checkOut = new CheckOutModel()
             {
-                TotalAmount = "90.00",
-                ReceiptNumber = "0382073091ydg2893798y"
+                TotalAmount = totalCost.ToString(),
+                ReceiptNumber = purchaseID
             };
-            return View(checkOut);
+
+            JsonObject createOrderRequest = new JsonObject();
+            createOrderRequest.Add("intent", "CAPTURE");
+
+            JsonObject amount = new JsonObject();
+            amount.Add("currency_code", "USD");
+            amount.Add("value", checkOut.TotalAmount.ToString());
+
+            JsonObject purchaseUnit1 = new JsonObject();
+            purchaseUnit1.Add("amount", amount);
+
+            JsonArray purchaseUnits = new JsonArray();
+            purchaseUnits.Add(purchaseUnit1);
+
+            createOrderRequest.Add("purchase_units", purchaseUnits);
+
+            string accessToken = await GetPayPalAccessToken();
+
+            string url = $"{PayPalUrl}/v2/checkout/orders";
+
+            string orderId;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
+                var content = new StringContent(JsonSerializer.Serialize(createOrderRequest), null, "application/json");
+                var result = await client.PostAsync(url, content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var data = await result.Content.ReadAsStringAsync();
+
+                    var jsonResponse = JsonNode.Parse(data);
+                    if (jsonResponse != null)
+                    {
+                        orderId = jsonResponse["id"].ToString();
+
+                        var response = new
+                        {
+                            id = orderId
+                        };
+
+                        return new JsonResult(response);
+                    }
+                }
+                return new JsonResult(null);
+            }
+
         }
 
 
@@ -65,7 +210,7 @@ namespace JSandwiches.MVC.Controllers
                     if (jsonResponse != null)
                     {
                         var status = jsonResponse["status"].ToString();
-                        if(status == "COMPLETED")
+                        if (status == "COMPLETED")
                         {
                             return new JsonResult("success");
 
@@ -92,8 +237,10 @@ namespace JSandwiches.MVC.Controllers
         private async Task<string> GetPayPalAccessToken()
         {
             string accessToken;
+            //var url = $"{PayPalUrl}/v1/oauth2/token" ;
             var url = $"https://api-m.sandbox.paypal.com/v1/oauth2/token";
 
+            //var request = new HttpRequestMessage(HttpMethod.Post, "https://api-m.sandbox.paypal.com/v1/oauth2/token");
 
             using (var httpClient = new HttpClient())
             {
@@ -120,6 +267,23 @@ namespace JSandwiches.MVC.Controllers
                 }
                 return accessToken = "";
             }
+        }
+
+        [HttpPost]
+        public ActionResult Remove(int id)
+        {
+            List<ShopCart> lstOrderIds = new List<ShopCart>();
+            if (HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart) != null
+                && HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart).Count() > 0)
+            {
+                lstOrderIds = HttpContext.Session.Get<List<ShopCart>>(AppConst.Cart);
+            }
+
+            lstOrderIds.Remove(lstOrderIds.FirstOrDefault(u => u.OrderID == id));
+
+            HttpContext.Session.Set(AppConst.Cart, lstOrderIds);
+            return RedirectToAction("CheckOut");
+            
         }
 
     }

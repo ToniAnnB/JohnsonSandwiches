@@ -23,5 +23,10 @@ namespace JSandwiches.Models.Food
         [ForeignKey("AddOnID")]
 
         public virtual AddOn AddOn { get; set; }
+
+
+        public int OrderID { get; set; }
+        [ForeignKey("OrderID")]
+        public virtual Order.Order Order { get; set; }
     }
 }

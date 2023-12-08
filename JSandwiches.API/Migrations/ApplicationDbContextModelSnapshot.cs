@@ -140,11 +140,16 @@ namespace JSandwiches.API.Migrations
                     b.Property<int>("MenuItemID")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddOnID");
 
                     b.HasIndex("MenuItemID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("MenuItemAddOn");
                 });
@@ -160,13 +165,10 @@ namespace JSandwiches.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("MenuItemAddOnID")
+                    b.Property<int?>("OrderStatusID")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderStausID")
+                    b.Property<int?>("OrderStausID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -176,8 +178,6 @@ namespace JSandwiches.API.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MenuItemAddOnID");
 
                     b.HasIndex("OrderStausID");
 
@@ -199,6 +199,30 @@ namespace JSandwiches.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderStatus");
+                });
+
+            modelBuilder.Entity("JSandwiches.Models.Order.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("JSandwiches.Models.Order.Receipt", b =>
@@ -711,28 +735,37 @@ namespace JSandwiches.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JSandwiches.Models.Order.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AddOn");
 
                     b.Navigation("MenuItem");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("JSandwiches.Models.Order.Order", b =>
                 {
-                    b.HasOne("JSandwiches.Models.Food.MenuItemAddOn", "MenuItemAddOn")
-                        .WithMany()
-                        .HasForeignKey("MenuItemAddOnID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("JSandwiches.Models.Order.OrderStatus", "OrderStatus")
                         .WithMany()
-                        .HasForeignKey("OrderStausID")
+                        .HasForeignKey("OrderStausID");
+
+                    b.Navigation("OrderStatus");
+                });
+
+            modelBuilder.Entity("JSandwiches.Models.Order.Payment", b =>
+                {
+                    b.HasOne("JSandwiches.Models.Order.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MenuItemAddOn");
-
-                    b.Navigation("OrderStatus");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("JSandwiches.Models.Order.Receipt", b =>

@@ -14,9 +14,9 @@ namespace JSandwiches.API.Controllers.Food
         private readonly IMapper _mapper;
         private List<string> includes = new List<string>()
             {
-                "MenuItem.Category",
-                "MenuItem",
-                "AddOn"
+                "MenuItem.SubCategory",
+                "AddOn",
+                "Order"
             };
         public MenuItemAddOnController(IUnitOfWork unitOfWork, IMapper mapper)
         {

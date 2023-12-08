@@ -1,98 +1,115 @@
 ﻿@model JSandwiches.MVC.Models.ViewModels.OrderVM
 @{
-    ViewData["Title"] = "Order Sandwhich";
+    ViewData["Title"] = "Order Sandwich";
     ViewBag.TabName = "";
 }
+<head>
+    <link href="~/css/order.css" rel="stylesheet" asp-append-version="true" />
+</head>
 
 <div class="order-container">
-    <form method="post">
-        <div class="top-section center-container">
-            <div class="item-image">
-                <img src="@Model.Order.MenuItemAddOn.MenuItem.ImagePath" />
-            </div>
-            <div class="item-addOns center-container">
-                <label>Add On</label>
-                <div class="add-checkboxes center-container-col">
-                    @foreach(var checkbox in Model.LstAddOnsCheckBox)
-                    {
-                        <input type="checkbox" value="@checkbox" />
-                    }
+    <form method="post" class="center-container">
+        <input asp-for="MenuItemAddOn.MenuItem.Id" />
+        <div class="top-section center-container-col">
+            <h1>@Model.MenuItemAddOn.MenuItem.Title</h1>
+            <div class="top-top center-container">
+                <div class="item-image">
+                    <img src="@Model.MenuItemAddOn.MenuItem.ImagePath" />
                 </div>
-            </div>
-        </div>
-        <hr />
-        <div class="bot-section center-container-col">
-            <div class="item-cost">
-                <h2>@Model.Order.MenuItemAddOn.MenuItem.Title</h2>
-                <div class="item-calculation">
-                    <p>@Model.Order.MenuItemAddOn.MenuItem.Price</p>
-                    <p>x @Model.Order.Amount</p>
-                </div>
-            </div>
-            <div class="addOn-cost">
-                <h2>Add Ons</h2>
-                <div class="addOns">
-                    @foreach(var hi in Model.LstAddOnsCheckBox)
-                    {
-                        <div class="selected-addOn">
-                            <label>@hi.AddOn.Title</label>
-                            <p class="checkbox">@hi.AddOn.Price</p>
+                <div class="center-container-col">
+                    <div class="item-addOns center-container">
+                        <label>Add Ons:</label>
+                        <div class="add-checkboxes center-container-col">
+                            @foreach (var checkbox in Model.LstAddOnsCheckBox)
+                            {
+                                <div class="center-container checkbox-contain">
+                                    <input type="checkbox" id="@checkbox.AddOn.Id" name="SelectedAddOns" value="@checkbox.AddOn.Id" class="checkbox" checked="@checkbox.IsChecked" />
+                                    <label for="@checkbox.AddOn.Id">@checkbox.AddOn.Title</label>
+
+                                </div>
+                            }
                         </div>
-                    }
-                    <div>
-                        <label>Add On Total: </label>
-                        <p id="addON-total"></p>
+                    </div>
+                    <div class="item-quantity center-container">
+                        <label for="quantity">Quantity:</label>
+                        <input asp-for="@Model.Order.Amount" id="quantity" value="1" class="quantity" />
                     </div>
                 </div>
             </div>
-            <div class="total-cost">
-                <label>Total</label>
-                <p id="toatl-cost"></p>
+            <div class="item-special" >
+                <label>Special Requests</label><br/>
+                <textarea asp-for="Order.SpecialRequest"></textarea>
+            </div>
+        </div>
+        <div class="bot-section center-container-col">
+            <div class="item-cost center-container">
+                <h2>@Model.MenuItemAddOn.MenuItem.Title</h2>
+                <div class="item-calculation center-container">
+                    <p>@Model.MenuItemAddOn.MenuItem.Price</p>
+                    <p>x <span id="item-quantity">1</span></p>
+                </div>
+            </div>
+            <div class="addOn-cost center-container">
+                <div class="addOns center-container">
+                    <label>Add On Total: </label>
+                    <p id="addON-total">0.00</p>
+                </div>
+            </div>
+            <div class="total-cost center-container">
+                <label>Final Total:</label>
+                <p id="total-cost">@Model.MenuItemAddOn.MenuItem.Price</p>
             </div>
             <div class="btn-container center-container">
-                <a asp-action="Listing">Cancel</a>
-                <a asp-action="AddToCart">Add to Cart</a>
-            </div>
-            <div class="btn2-container center-container">
-                <a asp-action="CheckOut">CheckOut</a>
-                <a asp-action="Listing">Contune Ordering</a>
+                <a asp-action="Listing" class="button cancel2">Cancel</a>
+                <button type="submit"  class="button create">Add to Cart</button>
             </div>
         </div>
     </form>
 </div>
-<script>
-    $(document).ready(function () {
-        $('.checkbox').change(function () {
-            updateSelectedCheckboxes();
 
-            // Get an array of selected checkbox IDs
-            var selectedCheckboxIds = $('.checkbox:checked').map(function () {
-                return this.id;
-            }).get();
-            calculateTotalPrice(selectedCheckboxIds);
+<script>
+    function showBtn2Container() {
+        $('.btn-container').hide();
+        $('.btn2-container').show();
+    }
+    $(document).ready(function () {
+        $('.checkbox, .quantity').change(function () {
+            updateSelectedCheckboxes();
+            updatePrice();
         });
     });
 
-    function updatePrice() {
-        // Add logic to calculate the price based on checkbox selections
-        var totalPrice = calculateTotalPrice();
+    function updateSelectedCheckboxes() {
 
-        // Update the display element
-        $('#addON-total').text(totalPrice);
+        // Update item quantity display
+        var quantity = $('#quantity').val();
+        $('#item-quantity').text(quantity);
     }
 
-    function calculateTotalPrice(selectedCheckboxIds) {
-        $.ajax({
-            url: '/Order/CalculateTotalPrice',
-            type: 'POST',
-            data: { selectedCheckboxIds: selectedCheckboxIds },
-            success: function (data) {
-                // Update the display element with the calculated total
-                $('#priceDisplay').text('Total Price: ' + data.totalPrice);
-            },
-            error: function () {
-                console.error('Error calculating total price');
-            }
-        });
+    function updatePrice() {
+        // Get an array of selected checkbox prices
+        var selectedCheckboxPrices = $('.checkbox:checked').map(function () {
+            return parseFloat($(this).val());
+        }).get();
+
+        // Calculate the total price
+        var addOnTotal = selectedCheckboxPrices.reduce(function (acc, price) {
+            return acc + price;
+        }, 0);
+
+        // Update the display elements
+        $('#addON-total').text(addOnTotal.toFixed(2));
+        // You can add logic to calculate the overall total here if needed
+        var overallTotal = calculateOverallTotal(addOnTotal);
+        $('#total-cost').text(overallTotal.toFixed(2));
+    }
+
+    function calculateOverallTotal(addOnTotal) {
+        // Add your logic to calculate the overall total if needed
+        // You can consider adding the item cost and other factors here
+        var itemCost = parseFloat("@Model.MenuItemAddOn.MenuItem.Price");
+        var quantity = parseInt($('#quantity').val());
+        var overallTotal = (itemCost * quantity) + addOnTotal;
+        return overallTotal;
     }
 </script>

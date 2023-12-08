@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JSandwhiches.Data\JSandwiches.Models.csproj" />
     <ProjectReference Include="..\JSandwiches.Models\JSandwiches.Models.csproj" />
   </ItemGroup>
 
