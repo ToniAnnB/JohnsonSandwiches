@@ -1,5 +1,6 @@
 using JSandwiches.MVC;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
+using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Respository;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.Extensions.FileProviders;
@@ -23,15 +24,16 @@ builder.Services.AddHttpClient("AuthAPI", httpClient =>
     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
     httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpClientFactory");
 });
-builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddMvc()
-    .AddSessionStateTempDataProvider();
+builder.Services.AddMvc().AddSessionStateTempDataProvider();
+
 builder.Services.AddSession();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -56,7 +58,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
 app.MapRazorPages();
 app.UseSession();

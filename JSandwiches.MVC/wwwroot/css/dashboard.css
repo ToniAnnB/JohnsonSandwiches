@@ -1,0 +1,114 @@
+﻿body{
+    font-family: var(--empBFont);
+}
+.content-container {
+    padding: 4%;
+    height: 100vh;
+}
+.top-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    
+}
+
+.dash-logo {
+    width: 8%;
+    position: absolute;
+    right: 100px;
+}
+
+.dash-date span {
+    font-size: 5rem;
+    text-shadow: 1px 1px 2px #d3d3d3;
+}
+
+.top-section p {
+    font-size: 1.6rem;
+}
+
+.dash-date p {
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+.dash-date label{
+    font-size: 4rem;
+    font-family: var(--empHFont);
+}
+
+.summary-cards {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    margin-top: 80px;
+    height: 50vh;
+}
+
+    .summary-cards .cards {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 180px;
+        height: 190px;
+        border-radius: 10px;
+        padding: 28px 10px;
+        box-shadow: 3px 4px 3px #d3d3d7;
+    }
+
+.yellow {
+    background-color: var(--yellow);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.summary-cards .cards p {
+    font-size: 4rem;
+    color: white;
+}
+
+.summary-cards .cards .card-descript p {
+    font-size: 1.7rem;
+    margin-bottom: 2px;
+    text-shadow: 1px 2px 3px #282828;
+}
+
+.transactions h1 {
+    color: white;
+    font-size: 3rem;
+}
+
+.transactions {
+    margin-top: 40px;
+    width: 90%;
+    height: 90vh;
+    background-color: #001F3F;
+    align-self: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+}
+
+    .transactions table {
+        padding: 10px;
+        width: 70%;
+    }
+
+    .transactions td {
+        color: white;
+        width: 50px;
+        height: 15px;
+    }
+
+    .transactions th {
+        padding: 5px 10px;
+        background-color: white;
+        border-radius: 15px;
+    }

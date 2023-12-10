@@ -9,7 +9,7 @@
 
 <div class="order-container">
     <form method="post" class="center-container">
-        <input asp-for="MenuItemAddOn.MenuItem.Id" />
+        <input asp-for="MenuItemAddOn.MenuItem.Id" hidden />
         <div class="top-section center-container-col">
             <h1>@Model.MenuItemAddOn.MenuItem.Title</h1>
             <div class="top-top center-container">
@@ -23,8 +23,7 @@
                             @foreach (var checkbox in Model.LstAddOnsCheckBox)
                             {
                                 <div class="center-container checkbox-contain">
-                                    <input type="checkbox" id="@checkbox.AddOn.Id" name="SelectedAddOns" value="@checkbox.AddOn.Id" class="checkbox" checked="@checkbox.IsChecked" />
-                                    <label for="@checkbox.AddOn.Id">@checkbox.AddOn.Title</label>
+                                    <input type="checkbox" id="@checkbox.AddOn.Id" name="SelectedAddOns" value="@checkbox.AddOn.Id" data-price="@checkbox.AddOn.Price" class="checkbox" checked="@checkbox.IsChecked" />                                    <label for="@checkbox.AddOn.Id">@checkbox.AddOn.Title</label>
 
                                 </div>
                             }
@@ -36,8 +35,8 @@
                     </div>
                 </div>
             </div>
-            <div class="item-special" >
-                <label>Special Requests</label><br/>
+            <div class="item-special">
+                <label>Special Requests</label><br />
                 <textarea asp-for="Order.SpecialRequest"></textarea>
             </div>
         </div>
@@ -61,7 +60,7 @@
             </div>
             <div class="btn-container center-container">
                 <a asp-action="Listing" class="button cancel2">Cancel</a>
-                <button type="submit"  class="button create">Add to Cart</button>
+                <button type="submit" class="button create">Add to Cart</button>
             </div>
         </div>
     </form>
@@ -89,7 +88,7 @@
     function updatePrice() {
         // Get an array of selected checkbox prices
         var selectedCheckboxPrices = $('.checkbox:checked').map(function () {
-            return parseFloat($(this).val());
+            return parseFloat($(this).data('price'));
         }).get();
 
         // Calculate the total price
@@ -97,16 +96,13 @@
             return acc + price;
         }, 0);
 
-        // Update the display elements
         $('#addON-total').text(addOnTotal.toFixed(2));
-        // You can add logic to calculate the overall total here if needed
+
         var overallTotal = calculateOverallTotal(addOnTotal);
         $('#total-cost').text(overallTotal.toFixed(2));
     }
 
     function calculateOverallTotal(addOnTotal) {
-        // Add your logic to calculate the overall total if needed
-        // You can consider adding the item cost and other factors here
         var itemCost = parseFloat("@Model.MenuItemAddOn.MenuItem.Price");
         var quantity = parseInt($('#quantity').val());
         var overallTotal = (itemCost * quantity) + addOnTotal;

@@ -17,7 +17,7 @@ namespace JSandwiches.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -215,6 +215,10 @@ namespace JSandwiches.API.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ReceiptNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(MAX)");
+
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -237,6 +241,7 @@ namespace JSandwiches.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("DealSpecificsID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("OrderID")
@@ -778,7 +783,9 @@ namespace JSandwiches.API.Migrations
 
                     b.HasOne("JSandwiches.Models.SpecialFeatures.DealSpecifics", "DealSpecifics")
                         .WithMany()
-                        .HasForeignKey("DealSpecificsID");
+                        .HasForeignKey("DealSpecificsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JSandwiches.Models.Order.Order", "Order")
                         .WithMany()

@@ -59,7 +59,7 @@
         
             @RenderBody()
 
-    @if (ViewData["Title"] != null && ViewData["Title"] != "Login")
+    @if (ViewData["Title"] != null && ViewData["Title"] != "Login" && role != "Admin")
     {
         <partial name="_footer" />
     }
@@ -76,6 +76,7 @@
     </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         AOS.init();
     </script>

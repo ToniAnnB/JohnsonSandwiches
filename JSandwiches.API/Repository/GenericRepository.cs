@@ -5,7 +5,7 @@ using JSandwiches.Models.Data;
 
 namespace JSandwiches.API.Respository
 {
-    public class GenericRespository<T> : IGenericRespository<T> where T : class
+    public class GenericRespository<T> : IGenericRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _db;

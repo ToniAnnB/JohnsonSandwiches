@@ -99,7 +99,6 @@ else
         },
         onApprove(data) {
             paypal_buttons.close();
-            // This function captures the funds from the transaction.
             return fetch("/CheckOut/CompleteOrder", {
                 method: "POST",
                 headers: {
@@ -111,7 +110,6 @@ else
             })
                 .then((response) => response.json())
                 .then((details) => {
-                    // This function shows a transaction success message to your buyer.
                     if (details == "success") {
                         document.getElementById("notification-container").innerHTML =
                             '<div class="alert alert-success" role="alert">The order is created successfully!<div>';
@@ -124,7 +122,6 @@ else
                 });
         },
         onCancel(data) {
-            // Show a cancel page, or return to cart
             document.getElementById("notification-container").innerHTML =
                 '<div class="alert alert-danger" role="alert">Order canceled!<div>';
 
@@ -136,26 +133,21 @@ else
             })
         },
         onError(err) {
-            // For example, redirect to a specific error page
             document.getElementById("notification-container").innerHTML =
                 '<div class="alert alert-danger" role="alert">Failed to create order!!!<div>';
         }
     });
 
-    // Calculate and update total cost
     function updateTotalCost() {
         let totalCost = 0;
 
-        // Iterate through each order and accumulate the total cost
         document.querySelectorAll('.order-price').forEach((priceElement) => {
             totalCost += parseFloat(priceElement.textContent);
         });
 
-        // Display the total cost in the "Total Cost" element
         document.querySelector('#total-cost-display').textContent = totalCost.toFixed(2);
     }
 
-    // Initial update when the page loads
     updateTotalCost();
 
     // Render PayPal buttons

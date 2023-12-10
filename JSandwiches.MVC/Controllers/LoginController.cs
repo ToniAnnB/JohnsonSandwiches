@@ -45,7 +45,7 @@ namespace JSandwiches.MVC.Controllers
                 {
                     if (responseData.ContainsKey("data") && responseData["data"] is JObject jObject)
                     {
-                        var token = jObject.GetValue("result").ToString();
+                        var token = JsonConvert.SerializeObject(responseData["data"]);
 
                         HttpContext.Session.SetString(Session_Auth, token);
 
@@ -74,7 +74,7 @@ namespace JSandwiches.MVC.Controllers
                         var returnUrl = HttpContext.Session.GetString("returnUrl")!;
                         if (returnUrl == null)
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Dashboard", "Home");
 
                         }
                         return Redirect(returnUrl);

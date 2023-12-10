@@ -1,6 +1,6 @@
 ﻿namespace JSandwiches.Models.DTO.OrderDTO
 {
-    public class PaymentDTO : CreateOrderDTO
+    public class PaymentDTO : CreatePaymentDTO
     {
         public int Id { get; set; }
 
@@ -11,6 +11,8 @@
     public class CreatePaymentDTO
     {
         public int OrderID { get; set; }
+
+        public string ReceiptNumber { get; set; }
 
         public decimal TotalCost { get; set; }
 

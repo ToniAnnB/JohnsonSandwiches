@@ -60,6 +60,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpPost]
+
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,6 +82,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpPut("{id}")]
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -102,6 +104,7 @@ namespace JSandwiches.API.Controllers.Food
 
 
         [HttpDelete("{id}")]
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

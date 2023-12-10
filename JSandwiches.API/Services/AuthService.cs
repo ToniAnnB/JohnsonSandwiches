@@ -12,16 +12,14 @@ namespace JSandwiches.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _config;
         private readonly ApplicationDbContext _db;
         private readonly ILogger<AuthService> _logger;
 
         public AuthService(UserManager<IdentityUser> userManager, IConfiguration config, ApplicationDbContext db,
-            ILogger<AuthService> logger, SignInManager<IdentityUser> signInManager)
+            ILogger<AuthService> logger)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _config = config;
             _db = db;
             _logger = logger;
@@ -107,47 +105,40 @@ namespace JSandwiches.Services
 
         public async Task<string> GenerateToken(LoginAppUserDTO user)
         {
-            _logger.LogInformation($"Generation of token attempt for {user.UserName}");
 
-            try
+
+            var identityUser = await _userManager.FindByEmailAsync(user.UserName);
+            if (identityUser == null)
             {
-                var identityUser = await _userManager.FindByEmailAsync(user.UserName);
-                if (identityUser == null)
-                {
-                    return null;
-                }
+                return null;
+            }
 
-                var userRoles = await _userManager.GetRolesAsync(identityUser);
+            var userRoles = await _userManager.GetRolesAsync(identityUser);
 
-                var claims = new List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim (ClaimTypes.Email, user.UserName),
             };
 
-                if (userRoles.Any())
-                {
-                    claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
-                }
-
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWTConfig:Key").Value));
-                var signInCreds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
-
-                var securityToken = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1),
-                    issuer: _config.GetSection("JWTConfig:Issuer").Value,
-                    audience: _config.GetSection("JWTConfig:Audience").Value,
-                    signingCredentials: signInCreds
-                    );
-                string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
-                return token;
-
-            }
-            catch (Exception ex)
+            if (userRoles.Any())
             {
-                _logger.LogError(ex, $"Something went wrong in {nameof(GenerateToken)}");
-                return null;
+                claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
             }
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWTConfig:Key").Value));
+            var signInCreds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
+
+            var securityToken = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                issuer: _config.GetSection("JWTConfig:Issuer").Value,
+                audience: _config.GetSection("JWTConfig:Audience").Value,
+                signingCredentials: signInCreds
+                );
+            string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            return token;
+
+
         }
 
     }

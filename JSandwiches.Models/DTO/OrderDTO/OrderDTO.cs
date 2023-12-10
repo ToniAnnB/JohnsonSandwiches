@@ -1,5 +1,4 @@
-﻿using JSandwiches.Models.DTO.FoodDTO;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JSandwiches.Models.DTO.OrderDTO
 {

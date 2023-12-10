@@ -44,26 +44,25 @@ namespace JSandwiches.Controllers
         public async Task<IActionResult> LoginUser(LoginAppUserDTO user)
         {
             var result = await _authService.LoginUser(user);
-            var lstRoles = await GetRoles(user);
+            var lstRoles = GetRoles(user);
 
 
             if (result != false)
             {
                 var token = _authService.GenerateToken(user);
-
-                return Ok(new { status = "success", message = "login succesful", data = token, roles = lstRoles });
+                return Ok(new { status = "success", message = "login succesful", data = token, roles = lstRoles});
             }
             return Ok(new { status = "fail", message = "login failed" });
 
         }
 
         [HttpPost]
-        public async Task<List<string>> GetRoles(LoginAppUserDTO user)
+        public List<string> GetRoles(LoginAppUserDTO user)
         {
             var lstRole = new List<string>();
-            var lUser = await _userManager.FindByEmailAsync(user.UserName);
+            var lUser =  _userManager.FindByEmailAsync(user.UserName).Result;
             if (lUser != null)
-                lstRole = (await _userManager.GetRolesAsync(lUser)).ToList();
+                lstRole = ((_userManager.GetRolesAsync(lUser))).Result.ToList();
             return lstRole;
         }
 

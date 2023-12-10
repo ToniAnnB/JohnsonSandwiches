@@ -1,5 +1,5 @@
 ﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -7,17 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JSandwiches.MVC.Controllers
 {
-    public class DealSpecificsController : Controller
-    {
+    public class DealSpecificsController : Controller 
+    { 
         private readonly IConsumUnitOfWork _unitOfWork;
+    private readonly HttpClient _client;
 
-        public DealSpecificsController(IConsumUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+    public DealSpecificsController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
+    {
+        _unitOfWork = unitOfWork;
+        _client = factoryClient.CreateClient("AuthAPI");
+    }
 
-        public async Task<IActionResult> Index(int pg)
+    public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstDealSpecificss = await _unitOfWork.DealSpecifics.GetAll();
 
             if (lstDealSpecificss == null)
@@ -39,6 +45,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var vm = new DealSpecificsVM()
             {
@@ -51,6 +60,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(DealSpecificsVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var imageFile = "";
 
             if (vm.DealImagePath != null)
@@ -77,6 +90,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var dealSpecifics = await _unitOfWork.DealSpecifics.GetById(id);
             if (dealSpecifics.Item1 != null)
@@ -98,6 +114,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(DealSpecificsVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var status = await _unitOfWork.DealSpecifics.Update(vm.DealSpecificsDTO, vm.DealSpecificsDTO.Id);
             if (status == true)

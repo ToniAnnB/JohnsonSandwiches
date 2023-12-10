@@ -1,5 +1,5 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +8,20 @@ namespace JSandwiches.MVC.Controllers
     public class CategoryController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly HttpClient _client;
 
-        public CategoryController(IConsumUnitOfWork unitOfWork)
+        public CategoryController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
         {
             _unitOfWork = unitOfWork;
+            _client = factoryClient.CreateClient("AuthAPI");
         }
 
         public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstCategories = await _unitOfWork.ItemCategory.GetAll();
 
             if (lstCategories == null)
@@ -31,6 +37,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var category = new ItemCategoryDTO();
             return View(category);
         }
@@ -38,6 +48,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ItemCategoryDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 
@@ -57,6 +71,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var category = await _unitOfWork.ItemCategory.GetById(id);
             if (category.Item1 != null)
                 return View(category.Item1);
@@ -70,6 +88,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ItemCategoryDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 

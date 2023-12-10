@@ -1,5 +1,5 @@
 ﻿using JSandwiches.Models.DTO.SpecialFeaturesDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +8,20 @@ namespace JSandwiches.MVC.Controllers
     public class LoyaltyPointController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly HttpClient _client;
 
-        public LoyaltyPointController(IConsumUnitOfWork unitOfWork)
+        public LoyaltyPointController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
         {
             _unitOfWork = unitOfWork;
+            _client = factoryClient.CreateClient("AuthAPI");
         }
 
         public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstLoyaltyPoints = await _unitOfWork.LoyaltyPoint.GetAll();
 
             if (lstLoyaltyPoints == null)
@@ -31,6 +37,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var loyaltyPoint = new LoyaltyPointDTO();
             return View(loyaltyPoint);
         }
@@ -38,6 +48,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(LoyaltyPointDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 
@@ -57,6 +71,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var loyaltyPoint = await _unitOfWork.LoyaltyPoint.GetById(id);
             if (loyaltyPoint.Item1 != null)
                 return View(loyaltyPoint.Item1);
@@ -70,6 +88,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(LoyaltyPointDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 

@@ -1,5 +1,5 @@
 ﻿using JSandwiches.Models.DTO.UsersDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +10,20 @@ namespace JSandwiches.MVC.Controllers
     public class CustomerController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly HttpClient _client;
 
-        public CustomerController(IConsumUnitOfWork unitOfWork)
+        public CustomerController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
         {
             _unitOfWork = unitOfWork;
+            _client = factoryClient.CreateClient("AuthAPI");
         }
 
         public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstCustomers = await _unitOfWork.CustomerAddress.GetAll();
 
             if (lstCustomers == null)
@@ -32,6 +38,9 @@ namespace JSandwiches.MVC.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var menuItem = await _unitOfWork.CustomerAddress.GetById(id);
             if (menuItem.Item1 != null)
@@ -47,6 +56,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var vm = new CustomerVM()
             {
@@ -60,6 +72,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CustomerVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             vm.CustomerAddress = new CustomerAddressDTO();
             var status = await _unitOfWork.Customer.Create2(vm.Customer);
             var status2 = await _unitOfWork.Address.Create2(vm.Address);
@@ -84,6 +100,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var dealSpecifics = await _unitOfWork.CustomerAddress.GetById(id);
             if (dealSpecifics.Item1 != null)
@@ -107,6 +126,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CustomerVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var status = await _unitOfWork.Customer.Update(vm.Customer, vm.Customer.Id);
             var status2 = await _unitOfWork.Address.Update(vm.Address, vm.Address.Id);
             if (status == true && status2 == true)

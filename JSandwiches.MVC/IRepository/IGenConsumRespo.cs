@@ -1,6 +1,6 @@
-﻿namespace JSandwiches.MVC.IRespository
+﻿namespace JSandwiches.MVC.IRepository
 {
-    public interface IGenConsumRespo<T> where T : class
+    public interface IGenConsumRepo<T> where T : class
     {
         Task<List<T>?> GetAll();
         Task<(T?, string?)> GetById(int id);

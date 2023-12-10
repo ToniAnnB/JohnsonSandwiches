@@ -17,14 +17,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(config =>
-{
-    config.CacheProfiles.Add("5minsDuration", new Microsoft.AspNetCore.Mvc.CacheProfile
-    {
-        Duration = 300,
-
-    });
-});
+builder.Services.AddControllers();
 
 
 #region Server Connection and Identity Config

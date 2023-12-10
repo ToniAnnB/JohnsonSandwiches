@@ -72,16 +72,13 @@ namespace JSandwiches.API.Controllers.Order
             if (payment == null)
                 return BadRequest();
 
-            if (ModelState.IsValid)
-            {
-                var result = _mapper.Map<Payment>(payment);
-                if (_unitOfWork.Payment.Insert(result).IsCompletedSuccessfully)
-                    await _unitOfWork.Save();
-                return Created("api/[controller]", result);
-            }
-            return BadRequest();
-        }
 
+            var result = _mapper.Map<Payment>(payment);
+            if (_unitOfWork.Payment.Insert(result).IsCompletedSuccessfully)
+                await _unitOfWork.Save();
+            return Created("api/[controller]", result);
+
+        }
 
 
         [HttpPut("{id}")]

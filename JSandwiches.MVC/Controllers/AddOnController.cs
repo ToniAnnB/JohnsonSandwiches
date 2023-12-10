@@ -1,5 +1,5 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +8,20 @@ namespace JSandwiches.MVC.Controllers
     public class AddOnController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly HttpClient _client;
 
-        public AddOnController(IConsumUnitOfWork unitOfWork)
+        public AddOnController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
         {
             _unitOfWork = unitOfWork;
+            _client = factoryClient.CreateClient("AuthAPI");
         }
 
         public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstAddOns = await _unitOfWork.AddOn.GetAll();
 
             if (lstAddOns == null)
@@ -30,6 +36,11 @@ namespace JSandwiches.MVC.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
+
             var addOn = await _unitOfWork.AddOn.GetById(id);
             if (addOn.Item1 != null)
                 return View(addOn.Item1);
@@ -43,6 +54,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var addOn = new AddOnDTO();
             return View(addOn);
         }
@@ -50,6 +65,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AddOnDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 
@@ -69,6 +88,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var addOn = await _unitOfWork.AddOn.GetById(id);
             if (addOn.Item1 != null)
                 return View(addOn.Item1);
@@ -82,6 +105,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(AddOnDTO model)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             if (!ModelState.IsValid)
                 return RedirectToAction("ErrorPage", "Home");
 
@@ -101,6 +128,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var status = await _unitOfWork.AddOn.Delete(id);
             if (status == true)
                 return RedirectToAction("Index");

@@ -2,7 +2,7 @@
 
 namespace ApplicationAPI.IRespository
 {
-    public interface IGenericRespository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         // null is used to make the parameter optional
         Task<IList<T>> GetAllAsync(

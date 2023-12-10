@@ -1,14 +1,9 @@
-﻿using Azure.Core;
-using JSandwiches.Models.DTO.FoodDTO;
-using JSandwiches.Models.DTO.OrderDTO;
-using JSandwiches.Models.Food;
-using JSandwiches.Models.Order;
-using JSandwiches.MVC.IRespository;
+﻿using JSandwiches.Models.DTO.OrderDTO;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using JSandwiches.MVC.Utils;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -93,7 +88,6 @@ namespace JSandwiches.MVC.Controllers
             //list of order ids
             List<int> lstCartOrderID = lstItems.Select(x => x.OrderID).ToList();
 
-            List<PaymentVM> lstVM = new List<PaymentVM>();
             var lstMenuItemAddOn = (await _unitOfWork.MenuItemAddOn.GetAll()).ToList();
             var lstOrder = (await _unitOfWork.Order.GetAll()).ToList();
 
@@ -108,8 +102,14 @@ namespace JSandwiches.MVC.Controllers
                 }
             }
 
-            decimal totalCost = 0;
+
             //payment details being gathered
+            List<PaymentVM> lstVM = new List<PaymentVM>();
+            decimal totalCost = 0;
+
+            string receiptNumber = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                                          .Substring(0, 22).Replace("/", "_").Replace("+", "-").TrimEnd('=');
+
             foreach (var order in lstCartOrder)
             {
                 var lstSelectedItems = lstMenuItemAddOn.Where(x => x.OrderID == order.Id).ToList();
@@ -117,21 +117,36 @@ namespace JSandwiches.MVC.Controllers
                 {
                     Order = order,
                     MenuItem = lstSelectedItems.Select(x => x.MenuItem).FirstOrDefault(),
-                    lstAddOns = lstSelectedItems.Select(x => x.AddOn).ToList()
+                    lstAddOns = lstSelectedItems.Select(x => x.AddOn).ToList(),
+                    Payment = new PaymentDTO()
                 };
                 var baseUrl = "https://localhost:44356/images/";
                 vm.MenuItem.ImagePath = baseUrl + vm.MenuItem.ImagePath;
                 totalCost += order.Price;
+                var payment = new PaymentDTO()
+                {
+                    Id = 0,
+                    OrderID = order.Id,
+                    ReceiptNumber = receiptNumber,
+                    TotalCost = totalCost,
+                    PaymentDate = DateTime.Now,
+                };
+                vm.Payment = payment;
                 lstVM.Add(vm);
             }
-            
-            string purchaseID = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
-        .Substring(0, 22).Replace("/", "_").Replace("+", "-").TrimEnd('=');
+
+            //adding payment to the database
+            foreach (var payment in lstVM)
+            {
+                var response = await _unitOfWork.Payment.Create(payment.Payment);
+            }
+
+
 
             var checkOut = new CheckOutModel()
             {
                 TotalAmount = totalCost.ToString(),
-                ReceiptNumber = purchaseID
+                ReceiptNumber = receiptNumber
             };
 
             JsonObject createOrderRequest = new JsonObject();
@@ -283,7 +298,7 @@ namespace JSandwiches.MVC.Controllers
 
             HttpContext.Session.Set(AppConst.Cart, lstOrderIds);
             return RedirectToAction("CheckOut");
-            
+
         }
 
     }

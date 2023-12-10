@@ -33,6 +33,8 @@ namespace JSandwiches.MVC
             CreateMap<OrderStatus, OrderStatusDTO>().ReverseMap();
             CreateMap<Receipt, ReceiptDTO>().ReverseMap();
             CreateMap<Receipt, CreateReceiptDTO>().ReverseMap();
+            CreateMap<Payment, PaymentDTO>().ReverseMap();
+            CreateMap<Payment, CreatePaymentDTO>().ReverseMap();
             #endregion
 
             #region Special Features related

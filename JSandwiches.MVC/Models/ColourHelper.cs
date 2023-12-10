@@ -53,9 +53,6 @@
 
             // Normalize the luminance to be between 0 and 1
             luminance /= 255;
-
-            // If the luminance is less than 0.5, the background color is dark, so return white
-            // Otherwise, return an ashy shade of black
             return luminance < 0.5 ? "#FFFFFF" : "#2a2c37";
         }
     }

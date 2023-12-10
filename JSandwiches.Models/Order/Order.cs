@@ -1,5 +1,4 @@
-﻿using JSandwiches.Models.Food;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JSandwiches.Models.Order

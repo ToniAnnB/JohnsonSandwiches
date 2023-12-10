@@ -1,13 +1,11 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
 using JSandwiches.Models.SpecialFeatures;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Drawing;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 
 namespace JSandwiches.MVC.Controllers
@@ -15,14 +13,20 @@ namespace JSandwiches.MVC.Controllers
     public class MenuItemController : Controller
     {
         private readonly IConsumUnitOfWork _unitOfWork;
+        private readonly HttpClient _client;
 
-        public MenuItemController(IConsumUnitOfWork unitOfWork)
+        public MenuItemController(IConsumUnitOfWork unitOfWork, IHttpClientFactory factoryClient)
         {
             _unitOfWork = unitOfWork;
+            _client = factoryClient.CreateClient("AuthAPI");
         }
 
         public async Task<IActionResult> Index(int pg)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var lstMenuItems = await _unitOfWork.MenuItem.GetAll();
 
             if (lstMenuItems == null)
@@ -37,6 +41,9 @@ namespace JSandwiches.MVC.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var menuItem = await _unitOfWork.MenuItem.GetById(id);
             if (menuItem.Item1 != null)
@@ -73,6 +80,9 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
             var vm = new MenuItemVM()
             {
@@ -85,6 +95,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MenuItemVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var imageFile = "";
 
             if (vm.MenuItemImagePath != null)
@@ -111,19 +125,22 @@ namespace JSandwiches.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
 
-            var dealSpecifics = await _unitOfWork.MenuItem.GetById(id);
-            if (dealSpecifics.Item1 != null)
+            var menuItem = await _unitOfWork.MenuItem.GetById(id);
+            if (menuItem.Item1 != null)
             {
                 var vm = new MenuItemVM()
                 {
-                    MenuItem = dealSpecifics.Item1,
+                    MenuItem = menuItem.Item1,
                     ddlSubCategory = await GetSubCategoryDDL()
                 };
                 return View(vm);
             }
 
-            var statusCode = dealSpecifics.Item2;
+            var statusCode = menuItem.Item2;
             if (statusCode == "404")
                 return RedirectToAction("NotFound", "Home");
             return RedirectToAction("ErrorPage", "Home");
@@ -132,6 +149,10 @@ namespace JSandwiches.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(MenuItemVM vm)
         {
+            var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
+            if (access == false)
+                return RedirectToAction("Index", "Login");
+
             var status = await _unitOfWork.MenuItem.Update(vm.MenuItem, vm.MenuItem.Id);
             if (status == true)
             {

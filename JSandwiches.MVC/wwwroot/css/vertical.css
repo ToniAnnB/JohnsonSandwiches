@@ -95,19 +95,7 @@
     }
 
 /* Style for the sidebar button */
-.sidebar-btn {
-    width: 80%;
-    height: 20px;
-    background-color: #071E23;
-    color: white;
-    font-weight: bold; /* Bold text */
-    border: none; /* No border */
-    border-radius: 8px; /* Border radius of 8px */
-    padding: 10px 15px; /* Adjust padding as needed for button size */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .select-nav {
     background-color: #fff;
@@ -121,7 +109,23 @@
         color: var(--black);
         cursor: default;
     }
-
+.sidebar-btn, .sidebar-btn i{
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.sidebar-btn{
+    background-color: var(--black);
+    padding: 2px 10px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 5px #000a;
+}
+.sidebar-btn:hover{
+    color: white;
+    transform: scale(1.1);
+    transition: 0.8s;
+}
 
 
 

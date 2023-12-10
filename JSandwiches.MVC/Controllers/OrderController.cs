@@ -1,6 +1,6 @@
 ﻿using JSandwiches.Models.DTO.FoodDTO;
 using JSandwiches.Models.DTO.OrderDTO;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using JSandwiches.MVC.Utils;

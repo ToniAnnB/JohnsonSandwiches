@@ -1,0 +1,50 @@
+﻿@model JSandwiches.MVC.Models.ViewModels.SummaryVM
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewBag.TabName = "";
+    var todayDate = DateTime.Now;
+}
+<head>
+    <link href="~/css/dashboard.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<div class="content-container">
+    <div  class="top-section">
+        <div  class="dash-date">
+            <label >Welcome Admin,</label>
+            <p>@todayDate.ToShortDateString()</p>
+            <p id="time"></p>
+        </div>
+        <p>
+            Our commitment to professionalism goes not just to our clients but
+            also to our personnel. We respect your development and are committed
+            to creating a supportive and inclusive work environment. We urge you
+            to grasp every chance to learn, grow, and contribute your unique
+            abilities to our collective success as you begin on this new adventure
+            with us.
+        </p>
+    </div>
+    <div  class="summary-cards">
+        <div class="cards yellow">
+            <p>$@Model.MonthlyRevenue</p>
+            <div class="card-descript">
+                <p>@Model.numMonthlyRevenue</p>
+                <p>Monthly Revenue</p>
+            </div>
+        </div>
+        <div  class="cards orange">
+            <p>$@Model.DailyRevenue</p>
+            <div  class="card-descript">
+                <p>@Model.numDailyRevenue</p>
+                <p>Daily Revenue</p>
+            </div>
+        </div>
+        <div  class="cards red">
+            <p>@Model.TopSeller</p>
+            <div  class="card-descript">
+                <p>Top Seller</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/tell-time.js"></script>
+

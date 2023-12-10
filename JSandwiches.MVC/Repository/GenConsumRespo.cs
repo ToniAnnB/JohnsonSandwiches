@@ -1,22 +1,26 @@
 ﻿using AutoMapper;
-using JSandwiches.MVC.IRespository;
+using JSandwiches.MVC.IRepository;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
 
 namespace JSandwiches.MVC.Respository
 {
-    public class GenConsumRespo<T> : IGenConsumRespo<T> where T : class
+    public class GenConsumRepo<T> : IGenConsumRepo<T> where T : class
     {
         private readonly HttpClient _httpClient;
         private readonly string _endpoint;
         private readonly IMapper _mapper;
 
-        public GenConsumRespo(string endpoint, IMapper mapper)
+        public GenConsumRepo(string endpoint, IMapper mapper)
         {
             _httpClient = new HttpClient();
             _endpoint = endpoint;
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
             _httpClient.BaseAddress = new Uri(endpoint);
+
             _mapper = mapper;
         }
 
