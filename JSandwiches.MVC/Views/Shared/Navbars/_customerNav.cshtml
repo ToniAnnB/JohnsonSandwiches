@@ -1,7 +1,10 @@
 ﻿<head>
     <link href="~/css/horizontal.css" rel="stylesheet" asp-append-version="true" />
 </head>
+@{
+    string login = Context.Session.GetString("LoginSession")!;
 
+}
 <div class="center-container nav-bar" id="navbar">
     <a id="nav-logo" class="logo gradient-hover" asp-area="" asp-controller="Home" asp-action="Index">Johnson's Sandwiches</a>
     <div class="center-container">
@@ -9,8 +12,16 @@
         <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Listing">Order</a>
         <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Catering</a>
         <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Contact Us</a>
-        <a class="nav-link " asp-area="" asp-controller="CheckOut" asp-action="CheckOut"><i class="fa-solid fa-store"></i></a>
-        <a class="nav-link center-container login-btn" asp-area="" asp-controller="Login" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i>Login</a>
+        <a class="nav-link " asp-area="" asp-controller="CheckOut" asp-action="CheckOut"><i class="checkout-link fa-solid fa-store"></i></a>
+
+        @if (login != null)
+        {
+            <a class="nav-link center-container login-btn" asp-area="" asp-controller="Login" asp-action="LogOut"><i class="fa-solid fa-arrow-right-to-bracket"></i>LogOut</a>
+        }
+        else
+        {
+            <a class="nav-link center-container login-btn" asp-area="" asp-controller="Login" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i>Login</a>
+        }
     </div>
 </div>
 <script>
@@ -18,6 +29,7 @@
     var navbar = document.getElementById("navbar");
     var navLogo = document.getElementById("nav-logo");
     var links = document.querySelectorAll(".nav-link");
+    var checklink = document.querySelectorAll(".checkout-link");
 
     var sticky = navbar.offsetTop;
 
@@ -26,11 +38,15 @@
             navbar.classList.add("scrolled");
             links.forEach(function (link) {
                 link.classList.add("l-scrolled")
+            });            checklink.forEach(function (link) {
+                link.classList.add("l-scrolled")
             });
             navLogo.classList.add("lo-scrolled")
         } else {
             navbar.classList.remove("scrolled");
             links.forEach(function (link) {
+                link.classList.remove("l-scrolled")
+            }); checklink.forEach(function (link) {
                 link.classList.remove("l-scrolled")
             });
             navLogo.classList.remove("lo-scrolled")

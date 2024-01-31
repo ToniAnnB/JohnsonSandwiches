@@ -19,6 +19,7 @@ builder.Services.AddTransient<IConsumUnitOfWork, ConsumUnitOfWork>();
 
 builder.Services.AddHttpClient("AuthAPI", httpClient =>
 {
+    //httpClient.BaseAddress = new Uri("http://tonibuzz-001-site1.htempurl.com/api/Auth");
     httpClient.BaseAddress = new Uri("https://localhost:44381/api/Auth");
     httpClient.DefaultRequestHeaders.Accept.Clear();
     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");

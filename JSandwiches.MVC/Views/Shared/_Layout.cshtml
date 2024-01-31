@@ -22,7 +22,7 @@
 }
 <body>
 
-    @if(ViewData["Title"]!= null && ViewData["Title"]!= "Login")
+    @if ((ViewData["Title"] != null && ViewData["Title"] != "Login" )&&( ViewData["Title"] != null && ViewData["Title"] != "Sign Up"))
     {
         <header>
             <nav>
@@ -59,7 +59,7 @@
         
             @RenderBody()
 
-    @if (ViewData["Title"] != null && ViewData["Title"] != "Login" && role != "Admin")
+    @if ((ViewData["Title"] != null && ViewData["Title"] != "Login") && (ViewData["Title"] != null && ViewData["Title"] != "Sign Up"))
     {
         <partial name="_footer" />
     }

@@ -34,6 +34,9 @@ input.form-control{
     font-size: 1.7rem;
     height: 50px!important;
 }
+.form-floating span {
+    color: var(--red);
+}
 .input-fields{
     gap:15px;
     width: 40%;

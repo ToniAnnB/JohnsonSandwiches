@@ -1,0 +1,107 @@
+﻿@model JSandwiches.MVC.Models.ViewModels.CustomerVM2
+
+@{
+    ViewData["Title"] = "Sign Up";
+}
+<head>
+    <link href="~/css/upsert.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+
+
+<div class="login-container">
+    <div class="register-content">
+        <div class="form-header center-container-col">
+            <a asp-controller="Home" asp-action="Index"><img src="/images/branding//Johnson’s Sandwiches.png" width="170" /></a>
+            <h1>Creation Form</h1>
+            <p>Please fill in the form below</p>
+        </div>
+        @if (TempData["PostResponse"] != null)
+        {
+            <div class="alert alert-danger mt-4">
+                <h1>Failure</h1>
+                <p>Process Failed. Please try a later</p>
+            </div>
+        }
+
+        <form asp-action="CustomerCreate" method="post" class="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <fieldset>
+                <legend>Personal</legend>
+                <div class="input-group gap-5">
+                    <div class="form-group w-40">
+                        <label asp-for="Customer.FirstName" class="control-label"></label>
+                        <input asp-for="Customer.FirstName" class="form-control" />
+                        <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-40">
+                        <label asp-for="Customer.LastName" class="control-label"></label>
+                        <input asp-for="Customer.LastName" class="form-control" />
+                        <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Phone" class="control-label"></label>
+                    <input asp-for="Customer.Phone" class="form-control" />
+                    <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Email" class="control-label"></label>
+                    <input asp-for="Customer.Email" class="form-control" />
+                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Address</legend>
+                <div class="form-group">
+                    <label asp-for="Address.Ln1" class="control-label"></label>
+                    <input asp-for="Address.Ln1" class="form-control" />
+                    <span asp-validation-for="Address.Ln1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Ln2" class="control-label"></label>
+                    <input asp-for="Address.Ln2" class="form-control" />
+                    <span asp-validation-for="Address.Ln2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Parish</label>
+                    <select asp-for="Address.ParishID" asp-items="@Model.ddlParishes">
+                        <option selected disabled>Select a Parish</option>
+                    </select>
+                    <span asp-validation-for="Address.ParishID" class="text-danger"></span>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Password</legend>
+                <div class="">
+                    <div class="form-floating">
+                        <input type="password" asp-for="ApplicationUser.Password" class="form-control" placeholder="" />
+                        <label asp-for="ApplicationUser.Password" class="control-label"></label>
+                        <span asp-validation-for="ApplicationUser.Password" class="text-danger"></span>
+                    </div>
+                </div>
+                @if (ViewBag.LoginError != null)
+                {
+                    <h4 class="text-danger mt-3">@ViewBag.LoginError</h4>
+                }
+
+            </fieldset>
+            <div class="button-group center-container">
+                <button asp-action="Index" class="button cancel">Cancel</button>
+                <button type="submit" class="button create">Sign Up</button>
+            </div>
+            <p class="register">Already have an account? Login <span><a asp-controller="Register" asp-action="Register">here</a></span></p>
+
+        </form>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

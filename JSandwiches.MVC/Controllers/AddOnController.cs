@@ -2,6 +2,7 @@
 using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace JSandwiches.MVC.Controllers
 {
@@ -21,6 +22,11 @@ namespace JSandwiches.MVC.Controllers
             var access = AuthorizationHelper.IsAuthenticated(_client, HttpContext);
             if (access == false)
                 return RedirectToAction("Index", "Login");
+
+            string role = HttpContext.Session.GetString("RoleSession");
+            if (role != "Admin")
+                return RedirectToAction("UnAuthorized", "Home");
+
 
             var lstAddOns = await _unitOfWork.AddOn.GetAll();
 

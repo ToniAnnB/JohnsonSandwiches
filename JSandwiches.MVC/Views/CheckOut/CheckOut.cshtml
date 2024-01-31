@@ -112,7 +112,7 @@ else
                 .then((details) => {
                     if (details == "success") {
                         document.getElementById("notification-container").innerHTML =
-                            '<div class="alert alert-success" role="alert">The order is created successfully!<div>';
+                            '<div class="alert alert-success" role="alert">The order is created successfully!<div> <div><a asp-action="ClearCart" asp-controller="CheckOut>Return to Home</a>"<div>';
                     }
                     else {
                         document.getElementById("notification-container").innerHTML =

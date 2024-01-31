@@ -46,6 +46,7 @@ namespace JSandwiches.MVC.Respository
         #endregion
 
         #region Food Related 
+        //public IGenConsumRepo<MenuItemDTO> MenuItem => _menuItem ??= new GenConsumRepo<MenuItemDTO>("https://localhost:44381/api/MenuItem", _mapper);
         public IGenConsumRepo<MenuItemDTO> MenuItem => _menuItem ??= new GenConsumRepo<MenuItemDTO>("https://localhost:44381/api/MenuItem", _mapper);
         public IGenConsumRepo<AddOnDTO> AddOn => _addOn ??= new GenConsumRepo<AddOnDTO>("https://localhost:44381/api/AddOn", _mapper);
         public IGenConsumRepo<MenuItemAddOnDTO> MenuItemAddOn => _menuItemAddOn ??= new GenConsumRepo<MenuItemAddOnDTO>("https://localhost:44381/api/MenuItemAddOn", _mapper);

@@ -1,3 +1,4 @@
+using JSandwiches.Models.Food;
 using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
@@ -51,25 +52,45 @@ namespace JSandwiches.MVC.Controllers
 
 
             var lstOrders = await _unitOfWork.MenuItemAddOn.GetAll();
+
+            if  (lstOrders == null || lstOrders.Count == 0)
+            {
+                var vm1 = new SummaryVM();
+                return View(vm1);
+            }
+
             var lstMenuItem = lstOrders.GroupBy(x => x.MenuItemID)
                                     .Select(group => new { Record = group.Key, Count = group.Count() })
                                     .OrderByDescending(x => x.Count);
 
-            var menuItemID = lstMenuItem.First().Record;
-            var menuItem = await _unitOfWork.MenuItem.GetById(menuItemID);
-            var menuItemTitle = menuItem.Item1.Title;
 
-            //creating actual model
-            var vm = new SummaryVM()
-            {
-                numMonthlyRevenue = monthlyOrders.Count(),
-                MonthlyRevenue = mTotal,
-                numDailyRevenue = todayOrders.Count(),
-                DailyRevenue = dTotal,
-                TopSeller = menuItemTitle
-            };
+                
+      
+                var menuItemID = lstMenuItem.First().Record;
+                var menuItem = await _unitOfWork.MenuItem.GetById(menuItemID);
+                var menuItemTitle = menuItem.Item1.Title;
+
+                //creating actual model
+                var vm = new SummaryVM()
+                {
+                    numMonthlyRevenue = monthlyOrders.Count(),
+                    MonthlyRevenue = mTotal,
+                    numDailyRevenue = todayOrders.Count(),
+                    DailyRevenue = dTotal,
+                    TopSeller = menuItemTitle
+                };
+            
+
+
+
+
 
             return View(vm);
+        }
+
+        public async Task<IActionResult> UnAuthorized()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

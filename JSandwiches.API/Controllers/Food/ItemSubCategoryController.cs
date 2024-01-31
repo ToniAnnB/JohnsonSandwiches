@@ -14,6 +14,10 @@ namespace JSandwiches.API.Controllers.Food
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private List<string> includes = new List<string>()
+            {
+                "Category",
+            };
         public ItemSubCategoryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -30,7 +34,7 @@ namespace JSandwiches.API.Controllers.Food
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSubCategories()
         {
-            var subCategories = await _unitOfWork.ItemSubCategory.GetAll(null, null, null);
+            var subCategories = await _unitOfWork.ItemSubCategory.GetAll(null, null, includes);
 
             if (subCategories == null)
                 return NotFound();
@@ -52,7 +56,7 @@ namespace JSandwiches.API.Controllers.Food
             if (id < 1)
                 return BadRequest();
 
-            var subCategory = await _unitOfWork.ItemSubCategory.Get(q => q.Id == id, null);
+            var subCategory = await _unitOfWork.ItemSubCategory.Get(q => q.Id == id, includes);
 
             if (subCategory == null)
                 return NotFound();

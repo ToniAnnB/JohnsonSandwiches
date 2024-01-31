@@ -227,8 +227,8 @@ namespace JSandwiches.MVC.Controllers
                         var status = jsonResponse["status"].ToString();
                         if (status == "COMPLETED")
                         {
+                            ClearCart();
                             return new JsonResult("success");
-
                         }
                     }
                 }
@@ -298,7 +298,23 @@ namespace JSandwiches.MVC.Controllers
 
             HttpContext.Session.Set(AppConst.Cart, lstOrderIds);
             return RedirectToAction("CheckOut");
+        }
 
+        [HttpPost]
+        public ActionResult ClearCart()
+        {
+            List<ShopCart> lstOrderIds = new List<ShopCart>();
+            if (HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart) != null
+                && HttpContext.Session.Get<IEnumerable<ShopCart>>(AppConst.Cart).Count() > 0)
+            {
+                lstOrderIds = HttpContext.Session.Get<List<ShopCart>>(AppConst.Cart);
+            }
+
+            lstOrderIds.Clear();
+            HttpContext.Session.Set(AppConst.Cart, lstOrderIds);
+            ViewBag.Purchase = "Success";
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

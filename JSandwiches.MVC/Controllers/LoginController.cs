@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text;
+using JSandwiches.Models.Users;
 
 namespace JSandwiches.MVC.Controllers
 {
@@ -71,10 +72,18 @@ namespace JSandwiches.MVC.Controllers
 
 
 
+                        var roleSession = HttpContext.Session.GetString("RoleSession")!;
+
+                        if (roleSession == "Customer")
+                            return RedirectToAction("Index", "Home");
+
+
                         var returnUrl = HttpContext.Session.GetString("returnUrl")!;
                         if (returnUrl == null)
                         {
+                            if (roleSession == "Admin")
                             return RedirectToAction("Dashboard", "Home");
+
 
                         }
                         return Redirect(returnUrl);
@@ -86,6 +95,8 @@ namespace JSandwiches.MVC.Controllers
             return View(appUser);
 
         }
+  
+
 
 
         public IActionResult Logout()
@@ -95,3 +106,4 @@ namespace JSandwiches.MVC.Controllers
         }
     }
 }
+ 

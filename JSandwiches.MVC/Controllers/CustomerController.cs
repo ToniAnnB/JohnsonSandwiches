@@ -1,9 +1,12 @@
 ﻿using JSandwiches.Models.DTO.UsersDTO;
+using JSandwiches.Models.Users;
 using JSandwiches.MVC.IRepository;
 using JSandwiches.MVC.Models;
 using JSandwiches.MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace JSandwiches.MVC.Controllers
 {
@@ -69,6 +72,19 @@ namespace JSandwiches.MVC.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CustomerCreate()
+        {
+            var vm = new CustomerVM2()
+            {
+                Customer = new CustomerDTO(),
+                Address = new AddressDTO(),
+                ApplicationUser = new ApplicationUser(),
+                ddlParishes = await GetParishDDL()
+            };
+            return View(vm);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CustomerVM vm)
         {
@@ -92,6 +108,42 @@ namespace JSandwiches.MVC.Controllers
             }
 
             TempData["PostResponse"] = "Failed";
+            vm.ddlParishes = await GetParishDDL();
+            return View(vm);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CustomerCreate(CustomerVM2 vm)
+        {
+            vm.CustomerAddress = new CustomerAddressDTO();
+            var status = await _unitOfWork.Customer.Create2(vm.Customer);
+            var status2 = await _unitOfWork.Address.Create2(vm.Address);
+            if (status.Item1 == true && status2.Item1 == true)
+            {
+                vm.CustomerAddress.CustomerID = status.Item2.Id;
+                vm.CustomerAddress.AddressID = status2.Item2.Id;
+                var status3 = await _unitOfWork.CustomerAddress.Create(vm.CustomerAddress);
+                if (status3 == true)
+                {
+                    vm.ApplicationUser.Roles = new List<string>()
+            {
+                "Customer"
+            };
+                    vm.ApplicationUser.UserName = vm.Customer.Email;
+
+                    var sAppUser = JsonConvert.SerializeObject(vm.ApplicationUser);
+                    var content = new StringContent(sAppUser, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await _client.PostAsync($"{_client.BaseAddress}/register", content);
+                    if (response.IsSuccessStatusCode)
+                    {  
+                        return RedirectToAction("Login", "Login");
+                    }
+                }
+            }
+
+            
             vm.ddlParishes = await GetParishDDL();
             return View(vm);
 
